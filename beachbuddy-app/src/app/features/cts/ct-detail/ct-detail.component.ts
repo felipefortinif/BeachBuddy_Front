@@ -37,16 +37,19 @@ export class CtDetailComponent implements OnInit {
   }
 
   private loadCtDetail(ctId: number, showAll: boolean): void {
-    this.ctService.get(ctId, { all: showAll }).subscribe({
+    this.ctService.get(ctId).subscribe({
       next: (data) => this.ctData.set(data),
-      error: (err) => console.error('Erro ao carregar CT', err)
+      error: (err: any) => console.error('Erro ao carregar CT', err)
     });
   }
 
   private loadInscricoes(): void {
-    this.inscricaoService.getMinhasInscricoes().subscribe({
+    const user = this.authService.currentUser();
+    if (!user) return;
+
+    this.inscricaoService.getMinhasInscricoes(user.id).subscribe({
       next: (inscricoes) => {
-        const ids = inscricoes.map(i => i.treino.id);
+        const ids = inscricoes.map(i => i.treino); // treino é o ID
         this.inscritosIds.set(ids);
       },
       error: () => {}

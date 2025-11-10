@@ -24,16 +24,16 @@
         @for (i of inscricoes(); track i.id) {
           <article class="inscricao-card">
             <header>
-              <h2>{{ i.treino.modalidade }}</h2>
+              <h2>{{ i.treino_detalhes?.titulo || 'Treino #' + i.treino }}</h2>
               <div class="inscricao-meta">
-                <span>{{ i.treino.data | date:'dd/MM/yyyy' }}</span>
-                <span>{{ i.treino.hora_inicio }} - {{ i.treino.hora_fim }}</span>
-                <span>CT: {{ i.treino.ct.nome }}</span>
+                <span>{{ i.treino_detalhes?.data | date:'dd/MM/yyyy' }}</span>
+                <span>{{ i.treino_detalhes?.hora_inicio }} - {{ i.treino_detalhes?.hora_fim }}</span>
+                <span>CT: {{ i.treino_detalhes?.ct_nome }}</span>
               </div>
             </header>
             <ul class="inscricao-details">
-              <li>Nível: {{ i.treino.nivel }}</li>
-              <li>Vagas: {{ i.treino.vagas }}</li>
+              <li>Inscrição: {{ i.data_inscricao | date:'dd/MM/yyyy HH:mm' }}</li>
+              <li>Aluno: {{ i.aluno_nome || 'Você' }}</li>
             </ul>
             <p>
               @if (i.status === 'CONFIRMADA') {

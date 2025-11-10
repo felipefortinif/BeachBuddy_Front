@@ -41,7 +41,7 @@ export class CtFormComponent implements OnInit {
   private loadCt(id: number): void {
     this.ctService.get(id).subscribe({
       next: (data) => {
-        this.ctForm.patchValue(data.ct);
+        this.ctForm.patchValue(data);
       },
       error: () => this.errorMessage.set('Erro ao carregar CT')
     });

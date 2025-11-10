@@ -1,16 +1,46 @@
-# BeachbuddyApp
+# 🏖️ BeachBuddy App - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.9.
+Plataforma de gerenciamento de treinos de praia desenvolvida com Angular 19.
 
-## Development server
+## 🚀 Tecnologias
 
-To start a local development server, run:
+- **Angular 19** - Framework frontend com standalone components
+- **TypeScript** - Linguagem com tipagem estática
+- **RxJS** - Programação reativa
+- **Angular Signals** - Gerenciamento de estado reativo
+- **Angular SSR** - Server-Side Rendering com hydration
+- **JWT** - Autenticação via JSON Web Tokens
+
+## 📋 Pré-requisitos
+
+- Node.js 18+ 
+- npm ou yarn
+- Backend Django rodando em `http://localhost:8000`
+
+## 🔧 Instalação
+
+```bash
+# Instalar dependências
+npm install
+```
+
+## 💻 Development Server
+
+Para iniciar o servidor de desenvolvimento:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Acesse `http://localhost:4200/`. A aplicação recarrega automaticamente ao modificar arquivos.
+
+## 🔌 Conexão com Backend
+
+O frontend está configurado para conectar com a API Django REST em:
+- **API Base URL**: `http://localhost:8000/api`
+- **Swagger**: `http://localhost:8000/swagger/`
+
+Certifique-se de que o backend está rodando antes de iniciar o frontend.
 
 ## Code scaffolding
 

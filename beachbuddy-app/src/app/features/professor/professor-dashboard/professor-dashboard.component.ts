@@ -57,17 +57,26 @@ export class ProfessorDashboardComponent implements OnInit {
   }
 
   private loadTreinos(filters?: any): void {
-    this.treinoService.list(filters).subscribe({
+    // Ajustar filtros para usar data_min e data_max ao invés de data e period
+    const apiFilters: any = {};
+    if (filters?.ct) apiFilters.ct = filters.ct;
+    if (filters?.data) apiFilters.data_min = filters.data;
+    
+    this.treinoService.list(apiFilters).subscribe({
       next: (data) => this.treinos.set(data),
       error: () => {}
     });
   }
 
   private loadStats(): void {
-    this.treinoService.getDashboardStats().subscribe({
-      next: (data) => this.stats.set(data),
-      error: () => {}
-    });
+    // Por enquanto, vamos calcular estatísticas localmente
+    // TODO: Implementar endpoint de estatísticas no backend
+    const stats = {
+      total_treinos: this.treinos().length,
+      proximos_treinos: this.treinos().filter(t => new Date(t.data) >= new Date()).length,
+      total_inscritos: 0 // Precisaria de endpoint específico
+    };
+    this.stats.set(stats);
   }
 
   applyFilters(): void {

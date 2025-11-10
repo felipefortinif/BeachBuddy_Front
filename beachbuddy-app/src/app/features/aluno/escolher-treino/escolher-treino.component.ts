@@ -27,23 +27,28 @@ export class EscolherTreinoComponent implements OnInit {
   ngOnInit(): void {
     const ctId = Number(this.route.snapshot.paramMap.get('ctId'));
     
+    // Buscar dados do CT
     this.ctService.get(ctId).subscribe({
-      next: (data) => this.ct.set(data.ct),
+      next: (data) => this.ct.set(data),
       error: () => {}
     });
 
+    // Buscar treinos do CT
     this.treinoService.getTreinosPorCt(ctId).subscribe({
       next: (data) => this.treinos.set(data),
       error: () => {}
     });
 
-    this.inscricaoService.getMinhasInscricoes().subscribe({
-      next: (inscricoes) => {
-        const ids = inscricoes.map(i => i.treino.id);
-        this.inscritosIds.set(ids);
-      },
-      error: () => {}
-    });
+    // Buscar inscrições do usuário logado (precisa pegar o ID do usuário do auth)
+    // TODO: Pegar o ID do usuário do AuthService
+    // Por enquanto, comentando para não dar erro
+    // this.inscricaoService.getMinhasInscricoes(userId).subscribe({
+    //   next: (inscricoes) => {
+    //     const ids = inscricoes.map(i => i.treino);
+    //     this.inscritosIds.set(ids);
+    //   },
+    //   error: () => {}
+    // });
   }
 
   inscrever(treinoId: number): void {

@@ -11,15 +11,15 @@
     <section class="gerente-stats">
       <div class="gerente-stat">
         <span>CTs ativos</span>
-        <strong>{{ stats().total_cts || 0 }}</strong>
+        <strong>{{ cts().length }}</strong>
       </div>
       <div class="gerente-stat">
         <span>Professores associados</span>
-        <strong>{{ stats().total_professores || 0 }}</strong>
+        <strong>{{ totalProfessores() }}</strong>
       </div>
       <div class="gerente-stat">
-        <span>Treinos futuros</span>
-        <strong>{{ stats().total_treinos || 0 }}</strong>
+        <span>Treinos cadastrados</span>
+        <strong>{{ totalTreinos() }}</strong>
       </div>
     </section>
 
