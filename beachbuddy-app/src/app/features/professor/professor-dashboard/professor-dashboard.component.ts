@@ -1,0 +1,141 @@
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TreinoService } from '../../../core/services/treino.service';
+import { CentroTreinamentoService } from '../../../core/services/centro-treinamento.service';
+import { Treino } from '../../../core/models/treino.model';
+import { CentroTreinamento } from '../../../core/models/centro-treinamento.model';
+
+@Component({
+  selector: 'app-professor-dashboard',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './professor-dashboard.component.html',
+  styles: []
+})
+export class ProfessorDashboardComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private treinoService = inject(TreinoService);
+  private ctService = inject(CentroTreinamentoService);
+
+  treinos = signal<Treino[]>([]);
+  cts = signal<CentroTreinamento[]>([]);
+  stats = signal<any>({});
+  
+  showModal = signal<boolean>(false);
+  modalMode = signal<'create' | 'edit'>('create');
+  editingTreinoId = signal<number | null>(null);
+
+  treinoForm: FormGroup = this.fb.group({
+    ct: ['', Validators.required],
+    modalidade: ['', Validators.required],
+    data: ['', Validators.required],
+    hora_inicio: ['', Validators.required],
+    hora_fim: ['', Validators.required],
+    vagas: [10, [Validators.required, Validators.min(1)]],
+    nivel: ['', Validators.required],
+    observacoes: ['']
+  });
+
+  filterForm: FormGroup = this.fb.group({
+    data: [''],
+    ct: [''],
+    period: ['']
+  });
+
+  ngOnInit(): void {
+    this.loadCts();
+    this.loadTreinos();
+    this.loadStats();
+  }
+
+  private loadCts(): void {
+    this.ctService.list().subscribe({
+      next: (data) => this.cts.set(data),
+      error: () => {}
+    });
+  }
+
+  private loadTreinos(filters?: any): void {
+    this.treinoService.list(filters).subscribe({
+      next: (data) => this.treinos.set(data),
+      error: () => {}
+    });
+  }
+
+  private loadStats(): void {
+    this.treinoService.getDashboardStats().subscribe({
+      next: (data) => this.stats.set(data),
+      error: () => {}
+    });
+  }
+
+  applyFilters(): void {
+    this.loadTreinos(this.filterForm.value);
+  }
+
+  clearFilters(): void {
+    this.filterForm.reset();
+    this.loadTreinos();
+  }
+
+  openCreateModal(): void {
+    this.modalMode.set('create');
+    this.treinoForm.reset({ vagas: 10 });
+    this.showModal.set(true);
+  }
+
+  openEditModal(treino: Treino): void {
+    this.modalMode.set('edit');
+    this.editingTreinoId.set(treino.id);
+    this.treinoForm.patchValue({
+      ct: treino.ct_id,
+      modalidade: treino.modalidade,
+      data: treino.data,
+      hora_inicio: treino.hora_inicio,
+      hora_fim: treino.hora_fim,
+      vagas: treino.vagas,
+      nivel: treino.nivel,
+      observacoes: treino.observacoes || ''
+    });
+    this.showModal.set(true);
+  }
+
+  closeModal(): void {
+    this.showModal.set(false);
+    this.treinoForm.reset();
+    this.editingTreinoId.set(null);
+  }
+
+  saveTreino(): void {
+    if (this.treinoForm.invalid) {
+      this.treinoForm.markAllAsTouched();
+      return;
+    }
+
+    const operation = this.modalMode() === 'edit' && this.editingTreinoId()
+      ? this.treinoService.update(this.editingTreinoId()!, this.treinoForm.value)
+      : this.treinoService.create(this.treinoForm.value);
+
+    operation.subscribe({
+      next: () => {
+        this.closeModal();
+        this.loadTreinos();
+        this.loadStats();
+      },
+      error: () => alert('Erro ao salvar treino')
+    });
+  }
+
+  deleteTreino(treinoId: number): void {
+    if (!confirm('Tem certeza que deseja excluir este treino?')) return;
+
+    this.treinoService.delete(treinoId).subscribe({
+      next: () => {
+        this.loadTreinos();
+        this.loadStats();
+      },
+      error: () => alert('Erro ao excluir treino')
+    });
+  }
+}

@@ -1,0 +1,30 @@
+<header>
+  <a class="brand" routerLink="/">
+    <img src="assets/images/logo_beachbuddy.png" alt="Beach Buddy Logo">
+    <span>Beach Buddy</span>
+  </a>
+  <nav>
+    @if (authService.isAuthenticated()) {
+      @if (authService.isAluno()) {
+        <a routerLink="/aluno/meus-treinos">Meus Treinos</a>
+        <a routerLink="/cts">CTs</a>
+      }
+      @if (authService.isProfessor()) {
+        <a routerLink="/professor/dashboard">Dashboard Professor</a>
+        <a routerLink="/cts">CTs</a>
+      }
+      @if (authService.isGerente()) {
+        <a routerLink="/gerente/meus-cts">Meus CTs</a>
+        <a routerLink="/gerente/novo-ct">Novo CT</a>
+        <a routerLink="/cts">CTs</a>
+      }
+      @if (!authService.isGerente()) {
+        <a routerLink="/perfil">Meu Perfil</a>
+      }
+      <a (click)="logout()" style="cursor: pointer">Sair</a>
+    } @else {
+      <a routerLink="/login">Entrar</a>
+      <a routerLink="/cts">CTs</a>
+    }
+  </nav>
+</header>

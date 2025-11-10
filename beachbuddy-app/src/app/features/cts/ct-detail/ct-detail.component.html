@@ -1,0 +1,144 @@
+<section class="ct-detail">
+  @if (ctData(); as data) {
+    <div class="ct-detail__nav">
+      <a routerLink="/cts" class="link-back">&larr; Voltar para lista</a>
+      <div class="ct-detail__toggle">
+        @if (mostrarTodos()) {
+          <a [routerLink]="['/cts', data.ct.id]" class="btn btn-outline btn-sm">Ver apenas próximos</a>
+        } @else {
+          <a [routerLink]="['/cts', data.ct.id]" [queryParams]="{all: 1}" class="btn btn-outline btn-sm">Ver todos os treinos</a>
+        }
+      </div>
+    </div>
+
+    <div class="ct-detail__grid">
+      <article class="ct-summary-card">
+        <header class="ct-summary-card__header">
+          <h1>{{ data.ct.nome }}</h1>
+          @if (data.ct.cnpj) {
+            <span class="ct-summary-card__badge">CNPJ {{ data.ct.cnpj }}</span>
+          }
+        </header>
+        <pre class="ct-summary-card__intro" style="white-space: pre-wrap; margin: 0; font-family: inherit;">{{ data.ct.modalidades }}</pre>
+        <dl class="ct-summary-card__details">
+          <div>
+            <dt>Endereço</dt>
+            <dd>{{ data.ct.endereco }}</dd>
+          </div>
+          <div>
+            <dt>Contato</dt>
+            <dd>{{ data.ct.contato }}</dd>
+          </div>
+          @if (data.ct.gerente) {
+            <div>
+              <dt>Gerente responsável</dt>
+              <dd>{{ data.ct.gerente.first_name }} {{ data.ct.gerente.last_name || data.ct.gerente.username }}</dd>
+            </div>
+          }
+        </dl>
+        <div class="ct-summary-card__professores">
+          <h3>Professores associados</h3>
+          @if (data.professores && data.professores.length > 0) {
+            <ul>
+              @for (professor of data.professores; track professor.id) {
+                <li>{{ professor.first_name }} {{ professor.last_name || professor.username }}</li>
+              }
+            </ul>
+          } @else {
+            <p>Sem professores vinculados ainda.</p>
+          }
+        </div>
+      </article>
+
+      <aside class="ct-insight-card">
+        <h2>Resumo rápido</h2>
+        <ul>
+          <li>
+            <span class="label">Treinos futuros</span>
+            <strong>{{ data.proximos_count }}</strong>
+          </li>
+          <li>
+            <span class="label">Treinos passados</span>
+            <strong>{{ data.passados_count }}</strong>
+          </li>
+          @if (data.next_treino) {
+            <li>
+              <span class="label">Próximo treino</span>
+              <strong>{{ data.next_treino.data | date:'dd/MM' }} · {{ data.next_treino.hora_inicio }}</strong>
+              <small>{{ data.next_treino.modalidade }} com {{ data.next_treino.professor.first_name }} {{ data.next_treino.professor.last_name }}</small>
+            </li>
+          } @else {
+            <li>
+              <span class="label">Próximo treino</span>
+              <strong>—</strong>
+              <small>Cadastre um novo horário para este CT.</small>
+            </li>
+          }
+        </ul>
+      </aside>
+    </div>
+
+    <section class="ct-treinos">
+      <header class="ct-treinos__header">
+        <div>
+          <h2>@if (mostrarTodos()) {Todos os treinos do CT} @else {Próximos treinos}</h2>
+          <p>@if (mostrarTodos()) {Inclui horários já realizados e futuros.} @else {Mostrando apenas sessões futuras disponíveis.}</p>
+        </div>
+      </header>
+
+      @if (data.treinos && data.treinos.length > 0) {
+        <div class="ct-treinos__grid">
+          @for (t of data.treinos; track t.id) {
+            <article class="ct-treino-card">
+              <header>
+                <span class="ct-treino-card__date">{{ t.data | date:'dd/MM/yyyy' }} · {{ t.hora_inicio }} - {{ t.hora_fim }}</span>
+                <h3>{{ t.modalidade }}</h3>
+              </header>
+              <dl>
+                <div>
+                  <dt>Professor</dt>
+                  <dd>{{ t.professor.first_name }} {{ t.professor.last_name || t.professor.username }}</dd>
+                </div>
+                <div>
+                  <dt>Nível</dt>
+                  <dd>{{ t.nivel }}</dd>
+                </div>
+                <div>
+                  <dt>Vagas</dt>
+                  <dd>{{ t.confirmadas }}/{{ t.vagas }} preenchidas</dd>
+                </div>
+                @if (t.observacoes) {
+                  <div>
+                    <dt>Observações</dt>
+                    <dd>{{ t.observacoes }}</dd>
+                  </div>
+                }
+              </dl>
+              <footer>
+                @if (isAluno()) {
+                  @if (inscritosIds().includes(t.id)) {
+                    <span class="status-badge status-badge--success">Inscrito</span>
+                  } @else if (t.confirmadas >= t.vagas) {
+                    <span class="status-badge status-badge--warning">Lotado</span>
+                  } @else {
+                    <button type="button" (click)="inscrever(t.id)" class="btn btn-sm">Inscrever-se</button>
+                  }
+                }
+              </footer>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          @if (mostrarTodos()) {
+            <h3>Nenhum treino cadastrado para este CT.</h3>
+            <p>Que tal planejar a próxima sequência de aulas?</p>
+          } @else {
+            <h3>Nenhum treino futuro disponível.</h3>
+            <p>Assim que novos horários forem cadastrados eles aparecerão aqui.</p>
+          }
+        </div>
+      }
+    </section>
+  }
+</section>

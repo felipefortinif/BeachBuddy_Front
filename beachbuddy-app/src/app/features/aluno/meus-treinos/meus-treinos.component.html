@@ -1,0 +1,61 @@
+<section class="aluno-header">
+      <div>
+        <h1>Meus Treinos</h1>
+        <p>Aqui você acompanha suas inscrições e pode cancelar quando necessário.</p>
+      </div>
+      <div class="aluno-actions">
+        <a class="btn" routerLink="/aluno/novo-treino">+ Novo treino</a>
+      </div>
+    </section>
+
+    <section class="aluno-stats" aria-label="Resumo">
+      <div class="aluno-stat">
+        <span>Total de inscrições</span>
+        <strong>{{ inscricoes().length }}</strong>
+      </div>
+      <div class="aluno-stat">
+        <span>Ativas</span>
+        <strong>{{ ativasCount() }}</strong>
+      </div>
+    </section>
+
+    @if (inscricoes().length > 0) {
+      <section class="inscricoes-grid" aria-live="polite">
+        @for (i of inscricoes(); track i.id) {
+          <article class="inscricao-card">
+            <header>
+              <h2>{{ i.treino.modalidade }}</h2>
+              <div class="inscricao-meta">
+                <span>{{ i.treino.data | date:'dd/MM/yyyy' }}</span>
+                <span>{{ i.treino.hora_inicio }} - {{ i.treino.hora_fim }}</span>
+                <span>CT: {{ i.treino.ct.nome }}</span>
+              </div>
+            </header>
+            <ul class="inscricao-details">
+              <li>Nível: {{ i.treino.nivel }}</li>
+              <li>Vagas: {{ i.treino.vagas }}</li>
+            </ul>
+            <p>
+              @if (i.status === 'CONFIRMADA') {
+                <span class="inscricao-status inscricao-status--confirmada">CONFIRMADA</span>
+              } @else if (i.status === 'PENDENTE') {
+                <span class="inscricao-status inscricao-status--pendente">PENDENTE</span>
+              } @else {
+                <span class="inscricao-status inscricao-status--cancelada">CANCELADA</span>
+              }
+            </p>
+            <div class="inscricao-actions">
+              @if (i.status !== 'CANCELADA') {
+                <button type="button" (click)="cancelar(i.id)" class="btn btn-outline btn-sm">Cancelar</button>
+              }
+            </div>
+          </article>
+        }
+      </section>
+    } @else {
+      <div class="empty-box">
+        <h2>Nenhuma inscrição ainda</h2>
+        <p>Você ainda não se inscreveu em nenhum treino. Que tal começar agora?</p>
+        <a class="btn" routerLink="/aluno/novo-treino">Encontrar treinos</a>
+      </div>
+    }

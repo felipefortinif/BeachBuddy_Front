@@ -1,0 +1,65 @@
+@if (perfil(); as user) {
+      <section class="profile-detail">
+        <header class="profile-header">
+          <div class="profile-avatar">{{ displayName().charAt(0).toUpperCase() }}</div>
+          <div class="profile-heading">
+            <span class="profile-heading__eyebrow">Meu perfil</span>
+            <h1>{{ displayName() }}</h1>
+            <p>{{ user.email || 'Nenhum e-mail cadastrado' }}</p>
+          </div>
+        </header>
+
+        <div class="profile-cards">
+          <article class="profile-card">
+            <h2>Dados pessoais</h2>
+            <dl>
+              <div>
+                <dt>Usuário</dt>
+                <dd>{{ user.username }}</dd>
+              </div>
+              <div>
+                <dt>Nome completo</dt>
+                <dd>{{ user.first_name }} {{ user.last_name }}</dd>
+              </div>
+              <div>
+                <dt>Tipo de conta</dt>
+                <dd>{{ user.usuario.tipo }}</dd>
+              </div>
+              @if (user.usuario.nivel) {
+                <div>
+                  <dt>Nível</dt>
+                  <dd>{{ user.usuario.nivel }}</dd>
+                </div>
+              }
+            </dl>
+          </article>
+
+          <article class="profile-card">
+            <h2>Contato</h2>
+            <dl>
+              <div>
+                <dt>E-mail</dt>
+                <dd>{{ user.email || '—' }}</dd>
+              </div>
+              @if (user.usuario.telefone) {
+                <div>
+                  <dt>Telefone</dt>
+                  <dd>{{ user.usuario.telefone }}</dd>
+                </div>
+              }
+            </dl>
+
+            @if (user.usuario.tipo === 'PROFESSOR' && user.usuario.certificacoes) {
+              <section class="profile-certifications">
+                <h3>Certificações</h3>
+                <pre style="white-space: pre-wrap; margin: 0; font-family: inherit;">{{ user.usuario.certificacoes }}</pre>
+              </section>
+            }
+          </article>
+        </div>
+
+        <footer class="profile-actions">
+          <a routerLink="/perfil/editar" class="btn">Editar perfil</a>
+        </footer>
+      </section>
+    }

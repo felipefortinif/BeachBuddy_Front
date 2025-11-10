@@ -1,0 +1,63 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Cadastro de Professor</h1>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+      @if (errorMessage()) {
+        <div class="form-errors">
+          <p>{{ errorMessage() }}</p>
+        </div>
+      }
+
+      <div class="form-field">
+        <label for="username">Usuário *</label>
+        <input id="username" type="text" formControlName="username">
+      </div>
+
+      <div class="form-field">
+        <label for="email">E-mail *</label>
+        <input id="email" type="email" formControlName="email">
+      </div>
+
+      <div class="form-field">
+        <label for="first_name">Nome *</label>
+        <input id="first_name" type="text" formControlName="first_name">
+      </div>
+
+      <div class="form-field">
+        <label for="last_name">Sobrenome *</label>
+        <input id="last_name" type="text" formControlName="last_name">
+      </div>
+
+      <div class="form-field">
+        <label for="telefone">Telefone</label>
+        <input id="telefone" type="tel" formControlName="telefone">
+      </div>
+
+      <div class="form-field">
+        <label for="certificacoes">Certificações</label>
+        <textarea id="certificacoes" formControlName="certificacoes" rows="3"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="password">Senha *</label>
+        <input id="password" type="password" formControlName="password">
+      </div>
+
+      <div class="form-field">
+        <label for="password2">Confirmar senha *</label>
+        <input id="password2" type="password" formControlName="password2">
+        @if (signupForm.hasError('passwordMismatch') && signupForm.get('password2')?.touched) {
+          <span class="error-text">As senhas não coincidem</span>
+        }
+      </div>
+
+      <button type="submit" [disabled]="authService.loading()">
+        {{ authService.loading() ? 'Criando conta...' : 'Criar conta' }}
+      </button>
+    </form>
+    
+    <div class="auth-alt-links">
+      <p>Já tem conta? <a routerLink="/login">Entrar</a></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<section class="gerente-header">
+      <div>
+        <h1>Centros gerenciados</h1>
+        <p>Monitore seus centros de treinamento, equipe e próximos treinos em um só lugar.</p>
+      </div>
+      <div class="gerente-actions">
+        <a routerLink="/gerente/novo-ct" class="btn">+ Novo CT</a>
+      </div>
+    </section>
+
+    <section class="gerente-stats">
+      <div class="gerente-stat">
+        <span>CTs ativos</span>
+        <strong>{{ stats().total_cts || 0 }}</strong>
+      </div>
+      <div class="gerente-stat">
+        <span>Professores associados</span>
+        <strong>{{ stats().total_professores || 0 }}</strong>
+      </div>
+      <div class="gerente-stat">
+        <span>Treinos futuros</span>
+        <strong>{{ stats().total_treinos || 0 }}</strong>
+      </div>
+    </section>
+
+    @if (cts().length > 0) {
+      <div class="gerente-ct-grid">
+        @for (ct of cts(); track ct.id) {
+          <article class="ct-card gerente-ct-card">
+            <header class="gerente-ct-card__header">
+              <div>
+                <h2>{{ ct.nome }}</h2>
+                <span class="gerente-ct-card__meta">{{ ct.endereco }}</span>
+              </div>
+              <span class="badge">{{ ct.treinos_futuros || 0 }} treinos ativos</span>
+            </header>
+
+            <div class="gerente-ct-card__body">
+              <dl class="gerente-ct-card__details">
+                <div>
+                  <dt>Contato</dt>
+                  <dd>{{ ct.contato || '—' }}</dd>
+                </div>
+                <div>
+                  <dt>CNPJ</dt>
+                  <dd>{{ ct.cnpj || '—' }}</dd>
+                </div>
+              </dl>
+              <div class="gerente-ct-card__modalidades">
+                <span class="label">Modalidades</span>
+                <pre style="white-space: pre-wrap; margin: 0; font-family: inherit;">{{ ct.modalidades }}</pre>
+              </div>
+              <div class="gerente-ct-card__professores">
+                <span class="label">Professores</span>
+                @if (ct.professores && ct.professores.length > 0) {
+                  <ul>
+                    @for (professor of ct.professores; track professor.id) {
+                      <li>{{ professor.first_name }} {{ professor.last_name || professor.username }}</li>
+                    }
+                  </ul>
+                } @else {
+                  <p class="gerente-ct-card__empty">Nenhum professor associado ainda.</p>
+                }
+              </div>
+            </div>
+
+            <footer class="gerente-ct-card__footer">
+              <div class="gerente-ct-card__primary">
+                <a [routerLink]="['/cts', ct.id]" class="btn btn-sm">Ver página do CT</a>
+                <a [routerLink]="['/gerente/cts', ct.id, 'professores']" class="btn btn-sm btn-outline">Gerenciar professores</a>
+              </div>
+              <div class="gerente-ct-card__secondary">
+                <a [routerLink]="['/cts', ct.id, 'editar']" class="link-inline">Editar dados</a>
+                <a [routerLink]="['/cts', ct.id, 'excluir']" class="link-inline link-danger">Excluir</a>
+              </div>
+            </footer>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <h2>Nenhum CT cadastrado</h2>
+        <p>Cadastre seu primeiro Centro de Treinamento para começar a adicionar professores e treinos.</p>
+        <a routerLink="/gerente/novo-ct" class="btn">Cadastrar CT</a>
+      </div>
+    }

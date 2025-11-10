@@ -1,0 +1,39 @@
+<section class="gerente-form">
+      <div class="gerente-form__wrapper">
+        <header class="gerente-form__header">
+          <a routerLink="/gerente/meus-cts" class="link-back">&larr; Meus CTs</a>
+          <h1>Equipe de professores</h1>
+          <p>Selecione quais professores podem ministrar treinos no <strong>{{ ctNome() }}</strong>.</p>
+        </header>
+
+        <form [formGroup]="professoresForm" (ngSubmit)="onSubmit()" class="gerente-form__form">
+          <div class="gerente-form__field">
+            <label for="professores">Professores disponíveis</label>
+            <select id="professores" formControlName="professores" multiple size="10">
+              @for (prof of todosProfessores(); track prof.id) {
+                <option [value]="prof.id">{{ prof.first_name }} {{ prof.last_name || prof.username }}</option>
+              }
+            </select>
+            <small>Use Ctrl/Cmd para selecionar múltiplos nomes.</small>
+          </div>
+
+          <div class="gerente-form__actions">
+            <button type="submit" class="btn">Salvar alterações</button>
+            <a routerLink="/gerente/meus-cts" class="btn btn-outline">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="gerente-card">
+      <h2>Professores associados</h2>
+      @if (professoresAtuais().length > 0) {
+        <ul class="gerente-tag-list">
+          @for (professor of professoresAtuais(); track professor.id) {
+            <li class="gerente-tag">{{ professor.first_name }} {{ professor.last_name || professor.username }}</li>
+          }
+        </ul>
+      } @else {
+        <p class="gerente-ct-card__empty">Nenhum professor associado ainda.</p>
+      }
+    </section>

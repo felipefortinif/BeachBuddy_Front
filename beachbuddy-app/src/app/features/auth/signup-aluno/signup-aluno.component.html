@@ -1,0 +1,99 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Cadastro de Aluno</h1>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+      @if (errorMessage()) {
+        <div class="form-errors">
+          <p>{{ errorMessage() }}</p>
+        </div>
+      }
+
+      <div class="form-field">
+        <label for="username">Usuário *</label>
+        <input 
+          id="username"
+          type="text" 
+          formControlName="username"
+          [class.error]="signupForm.get('username')?.invalid && signupForm.get('username')?.touched">
+        @if (signupForm.get('username')?.invalid && signupForm.get('username')?.touched) {
+          <span class="error-text">Campo obrigatório</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="email">E-mail *</label>
+        <input 
+          id="email"
+          type="email" 
+          formControlName="email"
+          [class.error]="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+        @if (signupForm.get('email')?.invalid && signupForm.get('email')?.touched) {
+          <span class="error-text">E-mail inválido</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="first_name">Nome *</label>
+        <input 
+          id="first_name"
+          type="text" 
+          formControlName="first_name"
+          [class.error]="signupForm.get('first_name')?.invalid && signupForm.get('first_name')?.touched">
+      </div>
+
+      <div class="form-field">
+        <label for="last_name">Sobrenome *</label>
+        <input 
+          id="last_name"
+          type="text" 
+          formControlName="last_name"
+          [class.error]="signupForm.get('last_name')?.invalid && signupForm.get('last_name')?.touched">
+      </div>
+
+      <div class="form-field">
+        <label for="telefone">Telefone</label>
+        <input 
+          id="telefone"
+          type="tel" 
+          formControlName="telefone">
+      </div>
+
+      <div class="form-field">
+        <label for="nivel">Nível</label>
+        <input 
+          id="nivel"
+          type="text" 
+          formControlName="nivel">
+      </div>
+
+      <div class="form-field">
+        <label for="password">Senha *</label>
+        <input 
+          id="password"
+          type="password" 
+          formControlName="password"
+          [class.error]="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+      </div>
+
+      <div class="form-field">
+        <label for="password2">Confirmar senha *</label>
+        <input 
+          id="password2"
+          type="password" 
+          formControlName="password2"
+          [class.error]="signupForm.get('password2')?.invalid && signupForm.get('password2')?.touched">
+        @if (signupForm.hasError('passwordMismatch') && signupForm.get('password2')?.touched) {
+          <span class="error-text">As senhas não coincidem</span>
+        }
+      </div>
+
+      <button type="submit" [disabled]="authService.loading()">
+        {{ authService.loading() ? 'Criando conta...' : 'Criar conta' }}
+      </button>
+    </form>
+    
+    <div class="auth-alt-links">
+      <p>Já tem conta? <a routerLink="/login">Entrar</a></p>
+    </div>
+  </div>
+</div>

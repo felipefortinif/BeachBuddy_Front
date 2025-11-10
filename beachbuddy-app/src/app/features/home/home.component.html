@@ -1,0 +1,35 @@
+<section class="hero">
+  <h1>Organize treinos de praia sem planilhas confusas</h1>
+  <p class="lead">Centralize centros de treinamento, agenda de treinos, professores e inscrições dos alunos em um só lugar simples.</p>
+  <div class="hero-actions">
+    <a routerLink="/cadastro/aluno" class="btn">Quero treinar</a>
+    <a routerLink="/cadastro/professor" class="btn btn-outline">Sou professor</a>
+    <a routerLink="/cadastro/gerente" class="btn btn-orange">Sou gerente</a>
+  </div>
+  <ul class="benefits-inline">
+    <li>Check-in rápido</li>
+    <li>Agenda clara</li>
+    <li>Professores conectados</li>
+    <li>Inscrições simples</li>
+    <li>CTs organizados</li>
+  </ul>
+  <div class="hero-metrics">
+    <div class="metric">
+      <strong>{{ metrics().metric_cts }}</strong>
+      <span>CTs</span>
+    </div>
+    <div class="metric">
+      <strong>{{ metrics().metric_professores }}</strong>
+      <span>Professores</span>
+    </div>
+    <div class="metric">
+      <strong>{{ metrics().metric_treinos }}</strong>
+      <span>Treinos Futuros</span>
+    </div>
+    <div class="metric">
+      <strong>{{ metrics().metric_alunos }}</strong>
+      <span>Alunos</span>
+    </div>
+  </div>
+  <p class="hero-note">Cadastro rápido · Sem cartão · Comece em minutos</p>
+</section>
