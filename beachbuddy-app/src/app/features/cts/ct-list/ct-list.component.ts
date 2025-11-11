@@ -17,7 +17,7 @@ export class CtListComponent implements OnInit {
   private authService = inject(AuthService);
 
   cts = signal<CentroTreinamento[]>([]);
-  
+
   isProfessor = computed(() => this.authService.isProfessor());
   isGerente = computed(() => this.authService.isGerente());
   currentUserId = computed(() => this.authService.currentUser()?.id || 0);
@@ -28,8 +28,11 @@ export class CtListComponent implements OnInit {
 
   private loadCts(): void {
     this.ctService.list().subscribe({
-      next: (data) => this.cts.set(data),
-      error: (err) => console.error('Erro ao carregar CTs', err)
+      next: (response: any) => {
+        const ctsArray = response.results || [];
+        this.cts.set(ctsArray);
+      },
+      error: (err) => console.error('Erro ao carregar CTs:', err)
     });
   }
 }
