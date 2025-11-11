@@ -29,11 +29,10 @@
         <div>
           <h2>{{ ct.nome }}</h2>
           @if (ct.gerente) {
-          <span class="ct-card__meta">Gerente: {{ ct.gerente.first_name }} {{ ct.gerente.last_name ||
-            ct.gerente.username }}</span>
+          <span class="ct-card__meta">Gerente: {{ ct.gerente_nome }}</span>
           }
         </div>
-        @if (isGerente() && ct.gerente_id === currentUserId()) {
+        @if (isGerente() && ct.gerente === currentUserId()) {
         <div class="ct-card__actions">
           <a [routerLink]="['/cts', ct.id, 'editar']" class="btn btn-sm">Editar</a>
           <a [routerLink]="['/cts', ct.id, 'excluir']" class="btn btn-outline btn-sm">Excluir</a>
@@ -59,8 +58,8 @@
         <div>
           <dt>Professores associados</dt>
           <dd>
-            @if (ct.professores_total) {
-            {{ ct.professores_total }}
+            @if (ct.professores) {
+            {{ ct.professores }}
             } @else {
             Nenhum cadastrado
             }

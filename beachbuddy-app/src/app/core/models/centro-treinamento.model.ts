@@ -7,10 +7,10 @@ export interface CentroTreinamento {
   contato: string;
   modalidades: string;
   cnpj?: string;
-  gerente_id: number;
-  gerente?: Usuario;
-  professores?: Usuario[];
-  professores_total?: number;
+  gerente: number;
+  gerente_nome?: string;
+  professores?: number;
+  professores_nomes?: string[];
   upcoming_treinos?: number;
   treinos_futuros?: number;
 }
