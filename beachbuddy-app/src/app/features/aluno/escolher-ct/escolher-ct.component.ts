@@ -18,8 +18,11 @@ export class EscolherCtComponent implements OnInit {
 
   ngOnInit(): void {
     this.ctService.list().subscribe({
-      next: (data) => this.cts.set(data),
-      error: (err) => console.error('Erro ao carregar CTs', err)
+      next: (response: any) => {
+        const ctsArray = response.results || [];
+        this.cts.set(ctsArray);
+      },
+      error: (err) => console.error('Erro ao carregar CTs:', err)
     });
   }
 }

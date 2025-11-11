@@ -1,29 +1,29 @@
 <section class="aluno-header">
-      <div>
-        <h1>Escolha um Centro</h1>
-        <p>Selecione o centro onde deseja se inscrever em um treino.</p>
-      </div>
-      <div class="aluno-actions">
-        <a routerLink="/aluno/meus-treinos" class="btn btn-outline">Voltar</a>
-      </div>
-    </section>
+  <div>
+    <h1>Escolha um Centro</h1>
+    <p>Selecione o centro onde deseja se inscrever em um treino.</p>
+  </div>
+  <div class="aluno-actions">
+    <a routerLink="/aluno/meus-treinos" class="btn btn-outline">Voltar</a>
+  </div>
+</section>
 
-    @if (cts().length > 0) {
-      <div class="wizard-grid">
-        @for (ct of cts(); track ct.id) {
-          <article class="wizard-card">
-            <h2>{{ ct.nome }}</h2>
-            <p>{{ ct.modalidades.length > 80 ? ct.modalidades.substring(0, 80) + '...' : ct.modalidades }}</p>
-            <footer>
-              <a class="btn btn-sm" [routerLink]="['/aluno/novo-treino', ct.id]">Ver treinos</a>
-            </footer>
-          </article>
-        }
-      </div>
-    } @else {
-      <div class="empty-box">
-        <h2>Nenhum centro disponível</h2>
-        <p>Volte mais tarde para verificar novos centros.</p>
-        <a routerLink="/aluno/meus-treinos" class="btn">Voltar</a>
-      </div>
-    }
+@if (cts()) {
+<div class="wizard-grid">
+  @for (ct of cts(); track ct.id) {
+  <article class="wizard-card">
+    <h2>{{ ct.nome }}</h2>
+    <p>{{ ct.modalidades.length > 80 ? ct.modalidades.substring(0, 80) + '...' : ct.modalidades }}</p>
+    <footer>
+      <a class="btn btn-sm" [routerLink]="['/aluno/novo-treino', ct.id]">Ver treinos</a>
+    </footer>
+  </article>
+  }
+</div>
+} @else {
+<div class="empty-box">
+  <h2>Nenhum centro disponível</h2>
+  <p>Volte mais tarde para verificar novos centros.</p>
+  <a routerLink="/aluno/meus-treinos" class="btn">Voltar</a>
+</div>
+}
