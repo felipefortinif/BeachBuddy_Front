@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Treino, TreinoForm } from '../models/treino.model';
 import { Inscricao } from '../models/inscricao.model';
 
@@ -29,7 +30,10 @@ export class TreinoService {
       httpParams = httpParams.set('data_max', params.data_max);
     }
     
-    return this.http.get<Treino[]>(`${this.API_URL}/`, { params: httpParams });
+    return this.http.get<{ results: Treino[] }>(`${this.API_URL}/`, { params: httpParams })
+      .pipe(
+        map(response => response.results)
+      );
   }
 
   /**

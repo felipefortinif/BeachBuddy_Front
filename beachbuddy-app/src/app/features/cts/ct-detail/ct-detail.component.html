@@ -4,9 +4,9 @@
       <a routerLink="/cts" class="link-back">&larr; Voltar para lista</a>
       <div class="ct-detail__toggle">
         @if (mostrarTodos()) {
-          <a [routerLink]="['/cts', data.ct.id]" class="btn btn-outline btn-sm">Ver apenas próximos</a>
+          <a [routerLink]="['/cts', data.id]" class="btn btn-outline btn-sm">Ver apenas próximos</a>
         } @else {
-          <a [routerLink]="['/cts', data.ct.id]" [queryParams]="{all: 1}" class="btn btn-outline btn-sm">Ver todos os treinos</a>
+          <a [routerLink]="['/cts', data.id]" [queryParams]="{all: 1}" class="btn btn-outline btn-sm">Ver todos os treinos</a>
         }
       </div>
     </div>
@@ -14,34 +14,34 @@
     <div class="ct-detail__grid">
       <article class="ct-summary-card">
         <header class="ct-summary-card__header">
-          <h1>{{ data.ct.nome }}</h1>
-          @if (data.ct.cnpj) {
-            <span class="ct-summary-card__badge">CNPJ {{ data.ct.cnpj }}</span>
+          <h1>{{ data.nome }}</h1>
+          @if (data.cnpj) {
+            <span class="ct-summary-card__badge">CNPJ {{ data.cnpj }}</span>
           }
         </header>
-        <pre class="ct-summary-card__intro" style="white-space: pre-wrap; margin: 0; font-family: inherit;">{{ data.ct.modalidades }}</pre>
+        <pre class="ct-summary-card__intro" style="white-space: pre-wrap; margin: 0; font-family: inherit;">{{ data.modalidades }}</pre>
         <dl class="ct-summary-card__details">
           <div>
             <dt>Endereço</dt>
-            <dd>{{ data.ct.endereco }}</dd>
+            <dd>{{ data.endereco }}</dd>
           </div>
           <div>
             <dt>Contato</dt>
-            <dd>{{ data.ct.contato }}</dd>
+            <dd>{{ data.contato }}</dd>
           </div>
-          @if (data.ct.gerente) {
+          @if (data.gerente) {
             <div>
               <dt>Gerente responsável</dt>
-              <dd>{{ data.ct.gerente.first_name }} {{ data.ct.gerente.last_name || data.ct.gerente.username }}</dd>
+              <dd>{{ data.gerente_nome }}</dd>
             </div>
           }
         </dl>
         <div class="ct-summary-card__professores">
           <h3>Professores associados</h3>
-          @if (data.professores && data.professores.length > 0) {
+          @if (data.professores && data.professores > 0) {
             <ul>
-              @for (professor of data.professores; track professor.id) {
-                <li>{{ professor.first_name }} {{ professor.last_name || professor.username }}</li>
+              @for (professor of data.professores_nomes; track professor.id) {
+                <li>{{ professor }}</li>
               }
             </ul>
           } @else {
@@ -52,20 +52,20 @@
 
       <aside class="ct-insight-card">
         <h2>Resumo rápido</h2>
-        <ul>
+        <ul> 
           <li>
             <span class="label">Treinos futuros</span>
-            <strong>{{ data.proximos_count }}</strong>
+            <strong>{{ treinosData().futuros.length }}</strong>
           </li>
           <li>
             <span class="label">Treinos passados</span>
-            <strong>{{ data.passados_count }}</strong>
+            <strong>{{ treinosData().passados.length }}</strong>
           </li>
-          @if (data.next_treino) {
+          @if (treinosData().proximoTreino; as proximoTreino) {
             <li>
               <span class="label">Próximo treino</span>
-              <strong>{{ data.next_treino.data | date:'dd/MM' }} · {{ data.next_treino.hora_inicio }}</strong>
-              <small>{{ data.next_treino.modalidade }} com {{ data.next_treino.professor.first_name }} {{ data.next_treino.professor.last_name }}</small>
+              <strong>{{ proximoTreino.data | date:'dd/MM' }} · {{ proximoTreino.hora_inicio }}</strong>
+              <small>{{ proximoTreino.modalidade }} com {{ proximoTreino.professor_nome }}</small>
             </li>
           } @else {
             <li>
@@ -86,9 +86,9 @@
         </div>
       </header>
 
-      @if (data.treinos && data.treinos.length > 0) {
+      @if (treinosData().exibir && treinosData().exibir.length > 0) {
         <div class="ct-treinos__grid">
-          @for (t of data.treinos; track t.id) {
+          @for (t of treinosData().exibir; track t.id) {
             <article class="ct-treino-card">
               <header>
                 <span class="ct-treino-card__date">{{ t.data | date:'dd/MM/yyyy' }} · {{ t.hora_inicio }} - {{ t.hora_fim }}</span>
@@ -97,7 +97,7 @@
               <dl>
                 <div>
                   <dt>Professor</dt>
-                  <dd>{{ t.professor.first_name }} {{ t.professor.last_name || t.professor.username }}</dd>
+                  <dd>{{ t.professor_nome }}</dd>
                 </div>
                 <div>
                   <dt>Nível</dt>
@@ -105,7 +105,7 @@
                 </div>
                 <div>
                   <dt>Vagas</dt>
-                  <dd>{{ t.confirmadas }}/{{ t.vagas }} preenchidas</dd>
+                  <dd>{{ t.vagas - t.vagas_disponiveis }}/{{ t.vagas }} preenchidas</dd>
                 </div>
                 @if (t.observacoes) {
                   <div>
@@ -118,7 +118,7 @@
                 @if (isAluno()) {
                   @if (inscritosIds().includes(t.id)) {
                     <span class="status-badge status-badge--success">Inscrito</span>
-                  } @else if (t.confirmadas >= t.vagas) {
+                  } @else if (t.vagas_disponiveis === 0) {
                     <span class="status-badge status-badge--warning">Lotado</span>
                   } @else {
                     <button type="button" (click)="inscrever(t.id)" class="btn btn-sm">Inscrever-se</button>

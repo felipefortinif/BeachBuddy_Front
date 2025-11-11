@@ -3,19 +3,18 @@ import { Usuario } from './user.model';
 
 export interface Treino {
   id: number;
-  ct: CentroTreinamento;
-  ct_id: number;
-  professor: Usuario;
-  professor_id: number;
+  ct: number; // ID do CT
+  ct_nome: string; // Nome do CT
+  professor: number; // ID do professor
+  professor_nome: string; // Nome do professor
   modalidade: string;
-  data: string;
-  hora_inicio: string;
-  hora_fim: string;
+  data: string; // YYYY-MM-DD
+  hora_inicio: string; // HH:MM:SS
+  hora_fim: string; // HH:MM:SS
   vagas: number;
+  vagas_disponiveis: number;
   nivel: string;
   observacoes?: string;
-  confirmadas: number;
-  vagas_disponiveis: number;
 }
 
 export interface TreinoForm {

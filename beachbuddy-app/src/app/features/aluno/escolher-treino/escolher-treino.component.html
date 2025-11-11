@@ -19,17 +19,17 @@
               <strong>Nível:</strong> {{ t.nivel }}
             </p>
             <p>
-              <span class="badge">{{ t.confirmadas }} / {{ t.vagas }} vagas</span>
+              <span class="badge">{{ t.vagas - t.vagas_disponiveis }} / {{ t.vagas }} vagas</span>
               @if (inscritosIds().includes(t.id)) {
                 <span class="badge-secondary">Inscrito</span>
-              } @else if (t.confirmadas >= t.vagas) {
+              } @else if (t.vagas_disponiveis === 0) {
                 <span class="badge-danger">Lotado</span>
               }
             </p>
             <footer>
               @if (inscritosIds().includes(t.id)) {
                 <em style="font-size:.75rem; color: var(--bb-muted);">Você já está inscrito.</em>
-              } @else if (t.confirmadas >= t.vagas) {
+              } @else if (t.vagas_disponiveis === 0) {
                 <em style="font-size:.75rem; color: var(--bb-muted);">Sem vagas disponíveis.</em>
               } @else {
                 <button type="button" (click)="inscrever(t.id)" class="btn btn-sm">Confirmar presença</button>

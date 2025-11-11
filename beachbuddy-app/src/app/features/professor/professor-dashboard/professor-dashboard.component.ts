@@ -98,7 +98,7 @@ export class ProfessorDashboardComponent implements OnInit {
     this.modalMode.set('edit');
     this.editingTreinoId.set(treino.id);
     this.treinoForm.patchValue({
-      ct: treino.ct_id,
+      ct: treino.ct, // ct agora é o ID diretamente
       modalidade: treino.modalidade,
       data: treino.data,
       hora_inicio: treino.hora_inicio,
