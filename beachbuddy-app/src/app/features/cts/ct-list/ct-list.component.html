@@ -68,8 +68,8 @@
         <div>
           <dt>Treinos futuros</dt>
           <dd>
-            @if (ct.upcoming_treinos) {
-            {{ ct.upcoming_treinos }} agendado{{ ct.upcoming_treinos > 1 ? 's' : '' }}
+            @if (getTreinosFuturos(ct.id) > 0) {
+            {{ getTreinosFuturos(ct.id) }} agendado{{ getTreinosFuturos(ct.id) > 1 ? 's' : '' }}
             } @else {
             Nenhum agendado
             }
