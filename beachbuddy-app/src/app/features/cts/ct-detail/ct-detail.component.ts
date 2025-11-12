@@ -65,13 +65,9 @@ export class CtDetailComponent implements OnInit {
     // Carrega todos os treinos do CT
     this.treinoService.list({ ct: ctId }).subscribe({
       next: (treinos) => {
-        console.log('=== DEBUG TREINOS ===');
-        console.log('Total de treinos recebidos da API:', treinos.length);
-        console.log('Treinos completos:', treinos);
         
         const hoje = new Date();
         hoje.setHours(0, 0, 0, 0);
-        console.log('Data de hoje (00:00:00):', hoje);
         
         // Separa treinos futuros e passados com debug detalhado
         const futuros = treinos
@@ -79,7 +75,6 @@ export class CtDetailComponent implements OnInit {
             const dataTreino = new Date(t.data);
             dataTreino.setHours(0, 0, 0, 0);
             const isFuturo = dataTreino >= hoje;
-            console.log(`Treino ${t.id}: ${t.data} (${dataTreino.toISOString()}) - É futuro? ${isFuturo}`);
             return isFuturo;
           })
           .sort((a, b) => {
@@ -96,13 +91,6 @@ export class CtDetailComponent implements OnInit {
         
         const proximoTreino = futuros.length > 0 ? futuros[0] : null;
         const exibir = showAll ? treinos : futuros;
-        
-        console.log('Resultado da filtragem:');
-        console.log('- Treinos futuros:', futuros.length, futuros);
-        console.log('- Treinos passados:', passados.length, passados);
-        console.log('- Próximo treino:', proximoTreino);
-        console.log('- Treinos a exibir:', exibir.length, exibir);
-        console.log('- Mostrar todos?', showAll);
         
         this.treinosData.set({
           todos: treinos,
