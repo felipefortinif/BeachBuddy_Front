@@ -28,9 +28,9 @@ export class CtListComponent implements OnInit {
 
   private loadCts(): void {
     this.ctService.list().subscribe({
-      next: (response: any) => {
-        const ctsArray = response.results || [];
-        this.cts.set(ctsArray);
+      next: (cts: CentroTreinamento[]) => {
+        console.log('CTs carregados:', cts);
+        this.cts.set(cts);
       },
       error: (err) => console.error('Erro ao carregar CTs:', err)
     });

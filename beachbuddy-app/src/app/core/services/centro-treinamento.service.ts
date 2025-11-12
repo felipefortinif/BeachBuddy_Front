@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CentroTreinamento, CentroTreinamentoForm } from '../models/centro-treinamento.model';
 import { Treino } from '../models/treino.model';
 
@@ -17,7 +18,10 @@ export class CentroTreinamentoService {
    * GET /api/centros-treinamento/
    */
   list(): Observable<CentroTreinamento[]> {
-    return this.http.get<CentroTreinamento[]>(`${this.API_URL}/`);
+    return this.http.get<{ results: CentroTreinamento[] }>(`${this.API_URL}/`)
+      .pipe(
+        map(response => response.results)
+      );
   }
 
   /**
@@ -65,7 +69,10 @@ export class CentroTreinamentoService {
    * GET /api/centros-treinamento/{id}/treinos/
    */
   getTreinos(ctId: number): Observable<Treino[]> {
-    return this.http.get<Treino[]>(`${this.API_URL}/${ctId}/treinos/`);
+    return this.http.get<{ results: Treino[] }>(`${this.API_URL}/${ctId}/treinos/`)
+      .pipe(
+        map(response => response.results)
+      );
   }
 
   /**

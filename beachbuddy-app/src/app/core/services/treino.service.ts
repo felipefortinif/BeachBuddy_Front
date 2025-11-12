@@ -81,7 +81,10 @@ export class TreinoService {
    * GET /api/treinos/{id}/inscricoes/
    */
   getInscricoes(treinoId: number): Observable<Inscricao[]> {
-    return this.http.get<Inscricao[]>(`${this.API_URL}/${treinoId}/inscricoes/`);
+    return this.http.get<{ results: Inscricao[] }>(`${this.API_URL}/${treinoId}/inscricoes/`)
+      .pipe(
+        map(response => response.results)
+      );
   }
 
   /**

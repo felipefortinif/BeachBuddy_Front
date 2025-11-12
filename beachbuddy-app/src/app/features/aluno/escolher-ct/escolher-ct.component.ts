@@ -18,9 +18,9 @@ export class EscolherCtComponent implements OnInit {
 
   ngOnInit(): void {
     this.ctService.list().subscribe({
-      next: (response: any) => {
-        const ctsArray = response.results || [];
-        this.cts.set(ctsArray);
+      next: (cts: CentroTreinamento[]) => {
+        console.log('CTs disponíveis:', cts);
+        this.cts.set(cts);
       },
       error: (err) => console.error('Erro ao carregar CTs:', err)
     });

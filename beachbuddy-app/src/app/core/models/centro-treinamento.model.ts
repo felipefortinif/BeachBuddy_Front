@@ -9,7 +9,7 @@ export interface CentroTreinamento {
   cnpj?: string;
   gerente: number;
   gerente_nome?: string;
-  professores?: number;
+  professores?: number[];
   professores_nomes?: string[];
   upcoming_treinos?: number;
   treinos_futuros?: number;

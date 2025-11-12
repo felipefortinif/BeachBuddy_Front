@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Inscricao } from '../models/inscricao.model';
 
 @Injectable({
@@ -28,7 +29,10 @@ export class InscricaoService {
       httpParams = httpParams.set('status', params.status);
     }
     
-    return this.http.get<Inscricao[]>(`${this.API_URL}/`, { params: httpParams });
+    return this.http.get<{ results: Inscricao[] }>(`${this.API_URL}/`, { params: httpParams })
+      .pipe(
+        map(response => response.results)
+      );
   }
 
   /**

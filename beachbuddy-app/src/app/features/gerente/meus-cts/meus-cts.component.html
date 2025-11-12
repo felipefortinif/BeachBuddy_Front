@@ -19,7 +19,7 @@
       </div>
       <div class="gerente-stat">
         <span>Treinos cadastrados</span>
-        <strong>{{ totalTreinos() }}</strong>
+        <!-- <strong>{{ totalTreinos() }}</strong> -->
       </div>
     </section>
 
@@ -54,8 +54,8 @@
                 <span class="label">Professores</span>
                 @if (ct.professores && ct.professores.length > 0) {
                   <ul>
-                    @for (professor of ct.professores; track professor.id) {
-                      <li>{{ professor.first_name }} {{ professor.last_name || professor.username }}</li>
+                    @for (professor of ct.professores_nomes; track professor) {
+                      <li>{{ professor }}</li>
                     }
                   </ul>
                 } @else {
