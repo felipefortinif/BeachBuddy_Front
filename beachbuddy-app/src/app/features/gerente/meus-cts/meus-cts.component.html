@@ -18,8 +18,8 @@
         <strong>{{ totalProfessores() }}</strong>
       </div>
       <div class="gerente-stat">
-        <span>Treinos cadastrados</span>
-        <!-- <strong>{{ totalTreinos() }}</strong> -->
+        <span>Treinos futuros</span>
+        <strong>{{ totalTreinos() }}</strong>
       </div>
     </section>
 
@@ -32,7 +32,7 @@
                 <h2>{{ ct.nome }}</h2>
                 <span class="gerente-ct-card__meta">{{ ct.endereco }}</span>
               </div>
-              <span class="badge">{{ ct.treinos_futuros || 0 }} treinos ativos</span>
+              <span class="badge">{{ getTreinosAtivos(ct.id) }} treinos ativos</span>
             </header>
 
             <div class="gerente-ct-card__body">
