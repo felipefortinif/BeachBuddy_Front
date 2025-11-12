@@ -11,7 +11,7 @@
             <label for="professores">Professores disponíveis</label>
             <select id="professores" formControlName="professores" multiple size="10">
               @for (prof of todosProfessores(); track prof.id) {
-                <option [value]="prof.id">{{ prof.first_name }} {{ prof.last_name || prof.username }}</option>
+                <option [value]="prof.id">{{ prof.username }}</option>
               }
             </select>
             <small>Use Ctrl/Cmd para selecionar múltiplos nomes.</small>

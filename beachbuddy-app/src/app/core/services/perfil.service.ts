@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Usuario } from '../models/user.model';
 
 export interface UpdateProfileData {
@@ -47,7 +48,10 @@ export class PerfilService {
     if (tipo) {
       params = params.set('tipo', tipo);
     }
-    return this.http.get<Usuario[]>(`${this.API_URL}/`, { params });
+    return this.http.get<{ results: Usuario[] }>(`${this.API_URL}/`, { params })
+      .pipe(
+        map(response => response.results)
+      );
   }
 
   /**
