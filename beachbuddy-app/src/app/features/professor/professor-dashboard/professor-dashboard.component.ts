@@ -21,7 +21,7 @@ export class ProfessorDashboardComponent implements OnInit {
   treinos = signal<Treino[]>([]);
   cts = signal<CentroTreinamento[]>([]);
   stats = signal<any>({});
-  
+
   showModal = signal<boolean>(false);
   modalMode = signal<'create' | 'edit'>('create');
   editingTreinoId = signal<number | null>(null);
@@ -52,7 +52,7 @@ export class ProfessorDashboardComponent implements OnInit {
   private loadCts(): void {
     this.ctService.list().subscribe({
       next: (data) => this.cts.set(data),
-      error: () => {}
+      error: () => { }
     });
   }
 
@@ -61,10 +61,10 @@ export class ProfessorDashboardComponent implements OnInit {
     const apiFilters: any = {};
     if (filters?.ct) apiFilters.ct = filters.ct;
     if (filters?.data) apiFilters.data_min = filters.data;
-    
+
     this.treinoService.list(apiFilters).subscribe({
       next: (data) => this.treinos.set(data),
-      error: () => {}
+      error: () => { }
     });
   }
 

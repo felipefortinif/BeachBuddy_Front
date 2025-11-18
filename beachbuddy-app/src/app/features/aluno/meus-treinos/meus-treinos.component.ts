@@ -17,12 +17,12 @@ export class MeusTreinosComponent implements OnInit {
   private authService = inject(AuthService);
 
   inscricoes = signal<Inscricao[]>([]);
-  
+
   inscricoesAtivas = computed(() => {
     const hoje = new Date().toISOString().split('T')[0];
-    return this.inscricoes().filter(i => 
-      i.status !== 'CANCELADA' && 
-      i.treino_detalhes?.data && 
+    return this.inscricoes().filter(i =>
+      i.status !== 'CANCELADA' &&
+      i.treino_detalhes?.data &&
       i.treino_detalhes.data >= hoje
     );
   });
