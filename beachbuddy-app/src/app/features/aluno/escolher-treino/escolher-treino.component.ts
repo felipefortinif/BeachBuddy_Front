@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TreinoService } from '../../../core/services/treino.service';
@@ -22,21 +22,25 @@ export class EscolherTreinoComponent implements OnInit {
 
   ct = signal<CentroTreinamento | null>(null);
   treinos = signal<Treino[]>([]);
+  treinosAtivos = computed(() => {
+    const hoje = new Date().toISOString().split('T')[0];
+    return this.treinos().filter(t => t.data >= hoje);
+  });
   inscritosIds = signal<number[]>([]);
 
   ngOnInit(): void {
     const ctId = Number(this.route.snapshot.paramMap.get('ctId'));
-    
+
     // Buscar dados do CT
     this.ctService.get(ctId).subscribe({
       next: (data) => this.ct.set(data),
-      error: () => {}
+      error: () => { }
     });
 
     // Buscar treinos do CT
     this.treinoService.getTreinosPorCt(ctId).subscribe({
       next: (data) => this.treinos.set(data),
-      error: () => {}
+      error: () => { }
     });
 
     // Buscar inscrições do usuário logado (precisa pegar o ID do usuário do auth)

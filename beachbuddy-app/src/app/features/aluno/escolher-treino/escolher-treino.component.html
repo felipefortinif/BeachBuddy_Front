@@ -1,47 +1,47 @@
 <section class="aluno-header">
-      <div>
-        <h1>{{ ct()?.nome }} · Treinos</h1>
-        <p>Selecione um treino para confirmar presença.</p>
-      </div>
-      <div class="aluno-actions">
-        <a routerLink="/aluno/novo-treino" class="btn btn-outline">Voltar</a>
-      </div>
-    </section>
+  <div>
+    <h1>{{ ct()?.nome }} · Treinos</h1>
+    <p>Selecione um treino para confirmar presença.</p>
+  </div>
+  <div class="aluno-actions">
+    <a routerLink="/aluno/novo-treino" class="btn btn-outline">Voltar</a>
+  </div>
+</section>
 
-    @if (treinos().length > 0) {
-      <div class="wizard-grid">
-        @for (t of treinos(); track t.id) {
-          <article class="wizard-card">
-            <h2>{{ t.modalidade }}</h2>
-            <p>
-              <strong>Data:</strong> {{ t.data | date:'dd/MM/yyyy' }}<br>
-              <strong>Hora:</strong> {{ t.hora_inicio }} - {{ t.hora_fim }}<br>
-              <strong>Nível:</strong> {{ t.nivel }}
-            </p>
-            <p>
-              <span class="badge">{{ t.vagas - t.vagas_disponiveis }} / {{ t.vagas }} vagas</span>
-              @if (inscritosIds().includes(t.id)) {
-                <span class="badge-secondary">Inscrito</span>
-              } @else if (t.vagas_disponiveis === 0) {
-                <span class="badge-danger">Lotado</span>
-              }
-            </p>
-            <footer>
-              @if (inscritosIds().includes(t.id)) {
-                <em style="font-size:.75rem; color: var(--bb-muted);">Você já está inscrito.</em>
-              } @else if (t.vagas_disponiveis === 0) {
-                <em style="font-size:.75rem; color: var(--bb-muted);">Sem vagas disponíveis.</em>
-              } @else {
-                <button type="button" (click)="inscrever(t.id)" class="btn btn-sm">Confirmar presença</button>
-              }
-            </footer>
-          </article>
-        }
-      </div>
-    } @else {
-      <div class="empty-box">
-        <h2>Nenhum treino disponível</h2>
-        <p>Volte mais tarde para verificar novos treinos neste centro.</p>
-        <a routerLink="/aluno/novo-treino" class="btn btn-outline">Voltar</a>
-      </div>
-    }
+@if (treinosAtivos().length > 0) {
+<div class="wizard-grid">
+  @for (t of treinosAtivos(); track t.id) {
+  <article class="wizard-card">
+    <h2>{{ t.modalidade }}</h2>
+    <p>
+      <strong>Data:</strong> {{ t.data | date:'dd/MM/yyyy' }}<br>
+      <strong>Hora:</strong> {{ t.hora_inicio }} - {{ t.hora_fim }}<br>
+      <strong>Nível:</strong> {{ t.nivel }}
+    </p>
+    <p>
+      <span class="badge">{{ t.vagas - t.vagas_disponiveis }} / {{ t.vagas }} vagas</span>
+      @if (inscritosIds().includes(t.id)) {
+      <span class="badge-secondary">Inscrito</span>
+      } @else if (t.vagas_disponiveis === 0) {
+      <span class="badge-danger">Lotado</span>
+      }
+    </p>
+    <footer>
+      @if (inscritosIds().includes(t.id)) {
+      <em style="font-size:.75rem; color: var(--bb-muted);">Você já está inscrito.</em>
+      } @else if (t.vagas_disponiveis === 0) {
+      <em style="font-size:.75rem; color: var(--bb-muted);">Sem vagas disponíveis.</em>
+      } @else {
+      <button type="button" (click)="inscrever(t.id)" class="btn btn-sm">Confirmar presença</button>
+      }
+    </footer>
+  </article>
+  }
+</div>
+} @else {
+<div class="empty-box">
+  <h2>Nenhum treino disponível</h2>
+  <p>Volte mais tarde para verificar novos treinos neste centro.</p>
+  <a routerLink="/aluno/novo-treino" class="btn btn-outline">Voltar</a>
+</div>
+}
