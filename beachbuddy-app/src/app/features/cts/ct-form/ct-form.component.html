@@ -1,52 +1,52 @@
-<section class="gerente-form">
-      <div class="gerente-form__wrapper">
-        <header class="gerente-form__header">
-          <h1>{{ isEdit() ? 'Editar CT' : 'Novo Centro de Treinamento' }}</h1>
-          <p>Cadastre as informações principais para divulgar seu centro aos professores e alunos.</p>
-        </header>
+<div class="ct-form-wrapper">
+  <div class="ct-form-card">
+    <header class="ct-form-header">
+      <h1 class="form-title">{{ isEdit() ? 'Editar CT' : 'Novo Centro de Treinamento' }}</h1>
+      <p class="form-subtitle">Cadastre as informações principais para divulgar seu centro aos professores e alunos.</p>
+    </header>
 
-        <form [formGroup]="ctForm" (ngSubmit)="onSubmit()" class="gerente-form__form" novalidate>
+    <form [formGroup]="ctForm" (ngSubmit)="onSubmit()" class="bb-form" novalidate>
           @if (errorMessage()) {
             <div class="form-errors">
               <p>{{ errorMessage() }}</p>
             </div>
           }
 
-          <div class="gerente-form__grid">
-            <div class="gerente-form__field">
-              <label for="nome">Nome *</label>
-              <input id="nome" type="text" formControlName="nome">
-              @if (ctForm.get('nome')?.invalid && ctForm.get('nome')?.touched) {
-                <span class="error-text">Campo obrigatório</span>
-              }
-            </div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="nome" class="form-label">Nome <span class="required-indicator">*</span></label>
+          <input id="nome" type="text" formControlName="nome">
+          @if (ctForm.get('nome')?.invalid && ctForm.get('nome')?.touched) {
+            <span class="error-text">Campo obrigatório</span>
+          }
+        </div>
 
-            <div class="gerente-form__field">
-              <label for="endereco">Endereço *</label>
-              <input id="endereco" type="text" formControlName="endereco">
-            </div>
+        <div class="form-field">
+          <label for="endereco" class="form-label">Endereço <span class="required-indicator">*</span></label>
+          <input id="endereco" type="text" formControlName="endereco">
+        </div>
 
-            <div class="gerente-form__field">
-              <label for="contato">Contato *</label>
-              <input id="contato" type="text" formControlName="contato">
-            </div>
+        <div class="form-field">
+          <label for="contato" class="form-label">Contato <span class="required-indicator">*</span></label>
+          <input id="contato" type="text" formControlName="contato">
+        </div>
 
-            <div class="gerente-form__field">
-              <label for="cnpj">CNPJ</label>
-              <input id="cnpj" type="text" formControlName="cnpj">
-            </div>
+        <div class="form-field">
+          <label for="cnpj" class="form-label">CNPJ</label>
+          <input id="cnpj" type="text" formControlName="cnpj">
+        </div>
 
-            <div class="gerente-form__field" style="grid-column: 1 / -1;">
-              <label for="modalidades">Modalidades *</label>
-              <textarea id="modalidades" formControlName="modalidades" rows="4"></textarea>
-              <small>Descreva as modalidades oferecidas (uma por linha ou separadas por vírgula)</small>
-            </div>
-          </div>
-
-          <div class="gerente-form__actions">
-            <button type="submit" class="btn">Salvar CT</button>
-            <a routerLink="/cts" class="btn btn-outline">Cancelar</a>
-          </div>
-        </form>
+        <div class="form-field form-field-full">
+          <label for="modalidades" class="form-label">Modalidades <span class="required-indicator">*</span></label>
+          <textarea id="modalidades" formControlName="modalidades" rows="4"></textarea>
+          <small class="form-help">Descreva as modalidades oferecidas (uma por linha ou separadas por vírgula)</small>
+        </div>
       </div>
-    </section>
+
+      <div class="form-actions">
+        <button type="submit" class="btn">Salvar CT</button>
+        <a routerLink="/cts" class="btn btn-outline">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>

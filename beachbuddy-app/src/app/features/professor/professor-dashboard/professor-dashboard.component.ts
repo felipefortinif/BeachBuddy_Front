@@ -11,7 +11,7 @@ import { CentroTreinamento } from '../../../core/models/centro-treinamento.model
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './professor-dashboard.component.html',
-  styles: []
+  styleUrl: './professor-dashboard.component.css'
 })
 export class ProfessorDashboardComponent implements OnInit {
   private fb = inject(FormBuilder);

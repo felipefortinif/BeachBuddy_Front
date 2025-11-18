@@ -1,1 +1,2 @@
-/* Estilos específicos do signup aluno, se necessário */
+/* Import shared auth styles */
+@import '../auth-shared.css';

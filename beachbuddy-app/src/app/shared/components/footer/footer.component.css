@@ -1,1 +1,8 @@
-/* Estilos específicos do footer, se necessário */
+/* === Footer Component Styles === */
+footer {
+    background: var(--bb-primary-pastel);
+    color: var(--bb-dark);
+    padding: 10px 16px;
+    font-weight: 600;
+    flex-shrink: 0;
+}

@@ -1,0 +1,73 @@
+/* ==== Shared Component Styles ==== */
+
+/* === Empty state === */
+.empty-state,
+.empty-box {
+    background: #ffffff;
+    border-radius: var(--bb-radius);
+    padding: 40px 32px;
+    text-align: center;
+    box-shadow: var(--bb-shadow);
+    border: 1px solid rgba(6, 46, 52, 0.08);
+}
+
+.empty-state h2,
+.empty-box h2 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--bb-dark);
+}
+
+.empty-state p,
+.empty-box p {
+    margin: 0 0 20px;
+    color: var(--bb-muted);
+}
+
+/* === Badges === */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    background: rgba(14, 208, 246, 0.15);
+    color: var(--bb-dark);
+}
+
+.badge-secondary {
+    background: rgba(254, 184, 1, 0.25);
+    color: #6a4b00;
+}
+
+.badge-danger {
+    background: rgba(255, 39, 95, 0.25);
+    color: #7b0420;
+}
+
+/* === Links === */
+.link-inline {
+    color: var(--bb-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.link-inline:hover {
+    text-decoration: underline;
+}
+
+.link-danger {
+    color: var(--bb-red);
+}
+
+.btn-danger-link {
+    --btn-color: var(--bb-red);
+    border-color: rgba(255, 39, 95, 0.4);
+    color: var(--bb-red);
+}
+
+.btn-danger-link:hover {
+    background: rgba(255, 39, 95, 0.08);
+    border-color: rgba(255, 39, 95, 0.7);
+}

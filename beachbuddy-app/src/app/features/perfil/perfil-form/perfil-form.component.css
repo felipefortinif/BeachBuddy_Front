@@ -1,1 +1,115 @@
-/* Estilos específicos do componente, se necessário */
+/* ==== Profile form page ==== */
+.profile-form {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 20px 72px;
+}
+
+.profile-form__wrapper {
+    background: #ffffff;
+    border-radius: var(--bb-radius);
+    border: 1px solid rgba(6, 46, 52, 0.08);
+    box-shadow: var(--bb-shadow);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.profile-form__header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--bb-dark);
+}
+
+.profile-form__header p {
+    margin: 8px 0 0;
+    color: var(--bb-muted);
+    font-size: 0.95rem;
+}
+
+.profile-form__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.profile-form__field label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--bb-text);
+    margin-bottom: 6px;
+}
+
+.profile-form__field input,
+.profile-form__field textarea,
+.profile-input {
+    width: 90%;
+    padding: 10px 12px;
+    border-radius: var(--bb-radius-sm);
+    border: 1px solid #c8d0d6;
+    font-size: 0.95rem;
+    background: #fdfdfd;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.profile-form__field textarea {
+    /* resize: vertical; */
+    width: 130%;
+}
+
+.profile-form__field input:focus,
+.profile-form__field textarea:focus {
+    outline: none;
+    border-color: var(--bb-primary);
+    box-shadow: 0 0 0 3px rgba(14, 208, 246, 0.18);
+}
+
+.profile-form__field small {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: var(--bb-muted);
+}
+
+.profile-form__field.has-error input,
+.profile-form__field.has-error textarea {
+    border-color: var(--bb-red);
+}
+
+.profile-form__errors {
+    background: rgba(255, 39, 95, 0.08);
+    border: 1px solid rgba(255, 39, 95, 0.26);
+    color: var(--bb-red);
+    border-radius: var(--bb-radius-sm);
+    padding: 12px 14px;
+    font-size: 0.9rem;
+}
+
+.profile-form__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.profile-form__link {
+    color: var(--bb-muted);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.profile-form__link:hover {
+    color: var(--bb-primary);
+}
+
+@media (max-width: 520px) {
+    .profile-form__wrapper {
+        padding: 24px 20px;
+    }
+
+    .profile-form__grid {
+        grid-template-columns: 1fr;
+    }
+}

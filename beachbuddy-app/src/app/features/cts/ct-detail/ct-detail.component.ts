@@ -12,7 +12,7 @@ import { Treino } from '../../../core/models/treino.model';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './ct-detail.component.html',
-  styles: []
+  styleUrl: './ct-detail.component.css'
 })
 export class CtDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);

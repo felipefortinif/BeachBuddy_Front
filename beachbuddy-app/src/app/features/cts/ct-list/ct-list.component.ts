@@ -13,7 +13,7 @@ import { forkJoin } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './ct-list.component.html',
-  styles: []
+  styleUrl: './ct-list.component.css'
 })
 export class CtListComponent implements OnInit {
   private ctService = inject(CentroTreinamentoService);

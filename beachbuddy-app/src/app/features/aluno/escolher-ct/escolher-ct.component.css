@@ -1,1 +1,32 @@
-/* Estilos específicos do componente, se necessário */
+/* Novo treino wizard - Escolher CT */
+.wizard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.wizard-card {
+    background: #fff;
+    border: 1px solid rgba(6, 46, 52, 0.08);
+    border-radius: var(--bb-radius);
+    box-shadow: var(--bb-shadow);
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.wizard-card h2 {
+    margin: 0;
+    font-size: 1.15rem;
+}
+
+.wizard-card p {
+    margin: 0;
+    font-size: .85rem;
+    color: var(--bb-muted);
+}
+
+.wizard-card footer {
+    margin-top: auto;
+}

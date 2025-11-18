@@ -1,1 +1,104 @@
-/* Estilos específicos do componente, se necessário */
+/* ==== Gerente form pages ==== */
+.gerente-form {
+    max-width: 780px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.gerente-form__wrapper {
+    background: #ffffff;
+    border-radius: var(--bb-radius);
+    border: 1px solid rgba(6, 46, 52, 0.08);
+    box-shadow: var(--bb-shadow);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.gerente-form__header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.gerente-form__header h1 {
+    margin: 0;
+    font-size: clamp(1.7rem, 3vw, 2.2rem);
+    color: var(--bb-dark);
+}
+
+.gerente-form__header p {
+    margin: 0;
+    color: var(--bb-muted);
+    line-height: 1.5;
+}
+
+.gerente-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gerente-form__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.gerente-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.gerente-form__field label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--bb-text);
+}
+
+.gerente-form__field input,
+.gerente-form__field textarea,
+.gerente-form__field select,
+.gerente-form__form select {
+    width: 85%;
+    padding: 10px 12px;
+    border-radius: var(--bb-radius-sm);
+    border: 1px solid #c8d0d6;
+    font-size: 0.95rem;
+    background: #fdfdfd;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.gerente-form__field textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.gerente-form__field input:focus,
+.gerente-form__field textarea:focus,
+.gerente-form__field select:focus,
+.gerente-form__form select:focus {
+    outline: none;
+    border-color: var(--bb-primary);
+    box-shadow: 0 0 0 3px rgba(14, 208, 246, 0.18);
+}
+
+.gerente-form__field.has-error input,
+.gerente-form__field.has-error textarea,
+.gerente-form__field.has-error select {
+    border-color: var(--bb-red);
+}
+
+.gerente-form__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+    .gerente-form__wrapper {
+        padding: 20px;
+    }
+}
