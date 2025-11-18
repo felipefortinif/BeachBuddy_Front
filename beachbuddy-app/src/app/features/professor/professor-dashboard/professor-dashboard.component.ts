@@ -19,6 +19,10 @@ export class ProfessorDashboardComponent implements OnInit {
   private ctService = inject(CentroTreinamentoService);
 
   treinos = signal<Treino[]>([]);
+  treinosAtivos = computed(() => {
+    const hoje = new Date().toISOString().split('T')[0];
+    return this.treinos().filter(t => t.data >= hoje);
+  });
   cts = signal<CentroTreinamento[]>([]);
   stats = signal<any>({});
 

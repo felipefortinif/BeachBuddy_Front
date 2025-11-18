@@ -38,7 +38,7 @@
       <select id="filter-ct" formControlName="ct">
         <option value="">Todos</option>
         @for (ct of cts(); track ct.id) {
-          <option [value]="ct.id">{{ ct.nome }}</option>
+        <option [value]="ct.id">{{ ct.nome }}</option>
         }
       </select>
     </div>
@@ -48,102 +48,103 @@
     </div>
   </form>
 
-  @if (treinos().length > 0) {
-    <section class="treino-grid">
-      @for (t of treinos(); track t.id) {
-        <article class="treino-card">
-          <header class="treino-card__header">
-            <h2>{{ t.modalidade }}</h2>
-            <span class="treino-card__date">{{ t.data | date:'dd/MM/yyyy' }} · {{ t.hora_inicio }} - {{ t.hora_fim }}</span>
-          </header>
-          <dl class="treino-card__details">
-            <div>
-              <dt>Centro</dt>
-              <dd>{{ t.ct }}</dd>
-            </div>
-            <div>
-              <dt>Nível</dt>
-              <dd>{{ t.nivel }}</dd>
-            </div>
-            <div>
-              <dt>Vagas</dt>
-              <dd>{{ t.vagas_disponiveis }}/{{ t.vagas }}</dd>
-            </div>
-          </dl>
-          @if (t.observacoes) {
-            <p class="treino-card__notes">{{ t.observacoes }}</p>
-          }
-          <footer class="treino-card__footer">
-            <div class="treino-card__actions">
-              <button type="button" class="btn btn-sm" (click)="openEditModal(t)">Editar</button>
-              <button type="button" class="btn btn-outline btn-sm btn-danger-link" (click)="deleteTreino(t.id)">Excluir treino</button>
-            </div>
-          </footer>
-        </article>
+  @if (treinosAtivos().length > 0) {
+  <section class="treino-grid">
+    @for (t of treinosAtivos(); track t.id) {
+    <article class="treino-card">
+      <header class="treino-card__header">
+        <h2>{{ t.modalidade }}</h2>
+        <span class="treino-card__date">{{ t.data | date:'dd/MM/yyyy' }} · {{ t.hora_inicio }} - {{ t.hora_fim }}</span>
+      </header>
+      <dl class="treino-card__details">
+        <div>
+          <dt>Centro</dt>
+          <dd>{{ t.ct }}</dd>
+        </div>
+        <div>
+          <dt>Nível</dt>
+          <dd>{{ t.nivel }}</dd>
+        </div>
+        <div>
+          <dt>Vagas</dt>
+          <dd>{{ t.vagas_disponiveis }}/{{ t.vagas }}</dd>
+        </div>
+      </dl>
+      @if (t.observacoes) {
+      <p class="treino-card__notes">{{ t.observacoes }}</p>
       }
-    </section>
+      <footer class="treino-card__footer">
+        <div class="treino-card__actions">
+          <button type="button" class="btn btn-sm" (click)="openEditModal(t)">Editar</button>
+          <button type="button" class="btn btn-outline btn-sm btn-danger-link" (click)="deleteTreino(t.id)">Excluir
+            treino</button>
+        </div>
+      </footer>
+    </article>
+    }
+  </section>
   } @else {
-    <div class="empty-state">
-      <h2>Você ainda não possui treinos cadastrados.</h2>
-      <p>Crie seu primeiro treino para montar a agenda dos alunos.</p>
-      <button type="button" class="btn" (click)="openCreateModal()">Adicionar treino agora</button>
-    </div>
+  <div class="empty-state">
+    <h2>Você ainda não possui treinos cadastrados.</h2>
+    <p>Crie seu primeiro treino para montar a agenda dos alunos.</p>
+    <button type="button" class="btn" (click)="openCreateModal()">Adicionar treino agora</button>
+  </div>
   }
 </section>
 
 <!-- Modal -->
 @if (showModal()) {
-  <div class="modal-backdrop is-open" (click)="closeModal()">
-    <div class="modal-card" (click)="$event.stopPropagation()">
-      <header class="modal-card__header">
-        <h2>{{ modalMode() === 'edit' ? 'Editar treino' : 'Novo treino' }}</h2>
-        <button type="button" class="modal-close" (click)="closeModal()">&times;</button>
-      </header>
-      <form [formGroup]="treinoForm" (ngSubmit)="saveTreino()" class="modal-form">
-        <div class="modal-form__grid">
-          <div class="modal-field">
-            <label for="ct">CT *</label>
-            <select id="ct" formControlName="ct">
-              <option value="">Selecione</option>
-              @for (ct of cts(); track ct.id) {
-                <option [value]="ct.id">{{ ct.nome }}</option>
-              }
-            </select>
-          </div>
-          <div class="modal-field">
-            <label for="modalidade">Modalidade *</label>
-            <input id="modalidade" type="text" formControlName="modalidade">
-          </div>
-          <div class="modal-field">
-            <label for="data">Data *</label>
-            <input id="data" type="date" formControlName="data">
-          </div>
-          <div class="modal-field">
-            <label for="hora_inicio">Hora início *</label>
-            <input id="hora_inicio" type="time" formControlName="hora_inicio">
-          </div>
-          <div class="modal-field">
-            <label for="hora_fim">Hora fim *</label>
-            <input id="hora_fim" type="time" formControlName="hora_fim">
-          </div>
-          <div class="modal-field">
-            <label for="vagas">Vagas *</label>
-            <input id="vagas" type="number" formControlName="vagas" min="1">
-          </div>
-          <div class="modal-field">
-            <label for="nivel">Nível *</label>
-            <input id="nivel" type="text" formControlName="nivel">
-          </div>
-          <div class="modal-field" style="grid-column: 1 / -1;">
-            <label for="observacoes">Observações</label>
-            <textarea id="observacoes" formControlName="observacoes" rows="3"></textarea>
-          </div>
+<div class="modal-backdrop is-open" (click)="closeModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <header class="modal-card__header">
+      <h2>{{ modalMode() === 'edit' ? 'Editar treino' : 'Novo treino' }}</h2>
+      <button type="button" class="modal-close" (click)="closeModal()">&times;</button>
+    </header>
+    <form [formGroup]="treinoForm" (ngSubmit)="saveTreino()" class="modal-form">
+      <div class="modal-form__grid">
+        <div class="modal-field">
+          <label for="ct">CT *</label>
+          <select id="ct" formControlName="ct">
+            <option value="">Selecione</option>
+            @for (ct of cts(); track ct.id) {
+            <option [value]="ct.id">{{ ct.nome }}</option>
+            }
+          </select>
         </div>
-        <div class="modal-actions">
-          <button type="submit" class="btn">{{ modalMode() === 'edit' ? 'Salvar alterações' : 'Cadastrar' }}</button>
-          <button type="button" class="btn btn-outline" (click)="closeModal()">Cancelar</button>
+        <div class="modal-field">
+          <label for="modalidade">Modalidade *</label>
+          <input id="modalidade" type="text" formControlName="modalidade">
         </div>
-      </form>
-    </div>
+        <div class="modal-field">
+          <label for="data">Data *</label>
+          <input id="data" type="date" formControlName="data">
+        </div>
+        <div class="modal-field">
+          <label for="hora_inicio">Hora início *</label>
+          <input id="hora_inicio" type="time" formControlName="hora_inicio">
+        </div>
+        <div class="modal-field">
+          <label for="hora_fim">Hora fim *</label>
+          <input id="hora_fim" type="time" formControlName="hora_fim">
+        </div>
+        <div class="modal-field">
+          <label for="vagas">Vagas *</label>
+          <input id="vagas" type="number" formControlName="vagas" min="1">
+        </div>
+        <div class="modal-field">
+          <label for="nivel">Nível *</label>
+          <input id="nivel" type="text" formControlName="nivel">
+        </div>
+        <div class="modal-field" style="grid-column: 1 / -1;">
+          <label for="observacoes">Observações</label>
+          <textarea id="observacoes" formControlName="observacoes" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="submit" class="btn">{{ modalMode() === 'edit' ? 'Salvar alterações' : 'Cadastrar' }}</button>
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancelar</button>
+      </div>
+    </form>
   </div>
+</div>
 }
