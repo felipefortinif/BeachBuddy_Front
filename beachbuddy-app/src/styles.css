@@ -6,8 +6,7 @@
 
 html,
 body {
-    height: 100%;
-    overflow-x: hidden;
+    min-height: 100%;
 }
 
 /* === Paleta Beach Buddy === */
@@ -33,11 +32,12 @@ body {
 body {
     font-family: Arial, sans-serif;
     background: var(--bb-bg);
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     color: var(--bb-text);
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .dashboard-page {
