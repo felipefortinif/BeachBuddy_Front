@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { InscricaoService } from '../../../core/services/inscricao.service';
@@ -17,7 +17,17 @@ export class MeusTreinosComponent implements OnInit {
   private authService = inject(AuthService);
 
   inscricoes = signal<Inscricao[]>([]);
-  ativasCount = signal<number>(0);
+  
+  inscricoesAtivas = computed(() => {
+    const hoje = new Date().toISOString().split('T')[0];
+    return this.inscricoes().filter(i => 
+      i.status !== 'CANCELADA' && 
+      i.treino_detalhes?.data && 
+      i.treino_detalhes.data >= hoje
+    );
+  });
+
+  ativasCount = computed(() => this.inscricoesAtivas().length);
 
   ngOnInit(): void {
     this.loadInscricoes();
@@ -30,8 +40,6 @@ export class MeusTreinosComponent implements OnInit {
     this.inscricaoService.getMinhasInscricoes(user.id).subscribe({
       next: (data) => {
         this.inscricoes.set(data);
-        const ativas = data.filter(i => i.status !== 'CANCELADA').length;
-        this.ativasCount.set(ativas);
       },
       error: (err: any) => console.error('Erro ao carregar inscrições', err)
     });

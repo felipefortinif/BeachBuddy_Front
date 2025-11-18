@@ -122,9 +122,16 @@ export class ProfessorDashboardComponent implements OnInit {
       return;
     }
 
+    // Preparar dados convertendo ct para number
+    const formData = {
+      ...this.treinoForm.value,
+      ct: Number(this.treinoForm.value.ct),
+      vagas: Number(this.treinoForm.value.vagas)
+    };
+
     const operation = this.modalMode() === 'edit' && this.editingTreinoId()
-      ? this.treinoService.update(this.editingTreinoId()!, this.treinoForm.value)
-      : this.treinoService.create(this.treinoForm.value);
+      ? this.treinoService.update(this.editingTreinoId()!, formData)
+      : this.treinoService.create(formData);
 
     operation.subscribe({
       next: () => {
@@ -132,7 +139,10 @@ export class ProfessorDashboardComponent implements OnInit {
         this.loadTreinos();
         this.loadStats();
       },
-      error: () => alert('Erro ao salvar treino')
+      error: (err) => {
+        console.error('Erro ao salvar treino:', err);
+        alert('Erro ao salvar treino. Verifique os dados e tente novamente.');
+      }
     });
   }
 
