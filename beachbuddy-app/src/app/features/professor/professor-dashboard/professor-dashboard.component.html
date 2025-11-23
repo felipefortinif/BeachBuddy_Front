@@ -24,7 +24,13 @@
     </article>
     <article class="stat-card">
       <span class="stat-label">Próximo treino</span>
-      <strong class="stat-value">—</strong>
+      @if (proximoTreino(); as treino) {
+        <strong class="stat-value" style="font-size: 1rem;">{{ treino.modalidade }}</strong>
+        <span class="stat-footnote">{{ treino.data | date:'dd/MM' }} às {{ treino.hora_inicio }}</span>
+      } @else {
+        <strong class="stat-value">—</strong>
+        <span class="stat-footnote">Nenhum treino agendado</span>
+      }
     </article>
   </section>
 

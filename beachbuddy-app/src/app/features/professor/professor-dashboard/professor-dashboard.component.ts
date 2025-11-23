@@ -24,7 +24,39 @@ export class ProfessorDashboardComponent implements OnInit {
     return this.treinos().filter(t => t.data >= hoje);
   });
   cts = signal<CentroTreinamento[]>([]);
-  stats = signal<any>({});
+  
+  proximoTreino = computed(() => {
+    const futuros = this.treinosAtivos();
+    if (futuros.length === 0) return null;
+    
+    // Ordenar por data e hora
+    return futuros.sort((a, b) => {
+      const dataA = new Date(`${a.data}T${a.hora_inicio}`);
+      const dataB = new Date(`${b.data}T${b.hora_inicio}`);
+      return dataA.getTime() - dataB.getTime();
+    })[0];
+  });
+
+  stats = computed(() => {
+    const hoje = new Date();
+    const treinosHoje = this.treinos().filter(t => {
+      const dataTreino = new Date(t.data);
+      return dataTreino.toDateString() === hoje.toDateString();
+    });
+    
+    const proximaSemana = new Date();
+    proximaSemana.setDate(hoje.getDate() + 7);
+    const treinosSemana = this.treinos().filter(t => {
+      const dataTreino = new Date(t.data);
+      return dataTreino >= hoje && dataTreino <= proximaSemana;
+    });
+
+    return {
+      total_treinos: this.treinosAtivos().length,
+      treinos_hoje: treinosHoje.length,
+      treinos_semana: treinosSemana.length
+    };
+  });
 
   showModal = signal<boolean>(false);
   modalMode = signal<'create' | 'edit'>('create');
@@ -50,7 +82,6 @@ export class ProfessorDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.loadCts();
     this.loadTreinos();
-    this.loadStats();
   }
 
   private loadCts(): void {
@@ -70,17 +101,6 @@ export class ProfessorDashboardComponent implements OnInit {
       next: (data) => this.treinos.set(data),
       error: () => { }
     });
-  }
-
-  private loadStats(): void {
-    // Por enquanto, vamos calcular estatísticas localmente
-    // TODO: Implementar endpoint de estatísticas no backend
-    const stats = {
-      total_treinos: this.treinos().length,
-      proximos_treinos: this.treinos().filter(t => new Date(t.data) >= new Date()).length,
-      total_inscritos: 0 // Precisaria de endpoint específico
-    };
-    this.stats.set(stats);
   }
 
   applyFilters(): void {
@@ -141,7 +161,6 @@ export class ProfessorDashboardComponent implements OnInit {
       next: () => {
         this.closeModal();
         this.loadTreinos();
-        this.loadStats();
       },
       error: (err) => {
         console.error('Erro ao salvar treino:', err);
@@ -156,9 +175,13 @@ export class ProfessorDashboardComponent implements OnInit {
     this.treinoService.delete(treinoId).subscribe({
       next: () => {
         this.loadTreinos();
-        this.loadStats();
       },
       error: () => alert('Erro ao excluir treino')
     });
+  }
+  
+  getTreinosAtivos(ctId: number): number {
+    const hoje = new Date().toISOString().split('T')[0];
+    return this.treinos().filter(t => t.ct === ctId && t.data >= hoje).length;
   }
 }
