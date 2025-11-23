@@ -1,4 +1,5 @@
 @import url('./app/shared/styles/modal.css');
+@import url('./app/shared/styles/shared-components.css');
 
 * {
     margin: 0;

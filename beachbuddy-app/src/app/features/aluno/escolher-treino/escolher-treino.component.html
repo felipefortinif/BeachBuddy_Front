@@ -19,7 +19,7 @@
       <strong>Nível:</strong> {{ t.nivel }}
     </p>
     <p>
-      <span class="badge">{{ t.vagas - t.vagas_disponiveis }} / {{ t.vagas }} vagas</span>
+      <span class="badge">{{ t.vagas_disponiveis }} / {{ t.vagas }} vagas</span>
       @if (inscritosIds().includes(t.id)) {
       <span class="badge-secondary">Inscrito</span>
       } @else if (t.vagas_disponiveis === 0) {

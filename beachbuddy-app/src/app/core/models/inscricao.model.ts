@@ -6,11 +6,14 @@ export interface Inscricao {
   id: number;
   treino: number; // ID do treino (API retorna apenas o ID)
   treino_detalhes?: { // Detalhes do treino (quando incluído na resposta)
-    titulo: string;
+    modalidade: string;
     data: string;
     hora_inicio: string;
     hora_fim: string;
     ct_nome: string;
+    nivel: string;
+    vagas: number;
+    vagas_disponiveis: number;
   };
   aluno: number; // ID do aluno
   aluno_nome?: string; // Nome do aluno (quando incluído)

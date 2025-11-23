@@ -78,13 +78,47 @@
     padding: 22px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
 }
 
-.inscricao-card h2 {
-    margin: 0;
-    font-size: 1.15rem;
+.inscricao-card__header h2 {
+    margin: 0 0 6px;
+    font-size: 1.2rem;
     color: var(--bb-dark);
+}
+
+.inscricao-card__date {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--bb-primary-pastel);
+}
+
+.inscricao-card__details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 0;
+}
+
+.inscricao-card__details dt {
+    font-size: 0.75rem;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--bb-muted);
+    margin-bottom: 4px;
+}
+
+.inscricao-card__details dd {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--bb-dark);
+}
+
+.inscricao-status-wrapper {
+    display: flex;
+    align-items: center;
 }
 
 .inscricao-meta {
@@ -117,9 +151,9 @@
 }
 
 .inscricao-status {
-    font-size: .65rem;
+    font-size: 0.75rem;
     letter-spacing: .5px;
-    padding: 4px 8px;
+    padding: 6px 12px;
     border-radius: 999px;
     font-weight: 600;
     display: inline-block;
