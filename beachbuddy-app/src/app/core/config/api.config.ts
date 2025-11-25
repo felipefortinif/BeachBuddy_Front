@@ -15,23 +15,20 @@ export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/login/',
     SIGNUP: '/auth/signup/',
-    TOKEN: '/auth/token/',
-    TOKEN_REFRESH: '/auth/token/refresh/',
-    TOKEN_VERIFY: '/auth/token/verify/',
   },
-  
+
   // Centros de Treinamento
   CENTROS_TREINAMENTO: '/centros-treinamento/',
-  
+
   // Treinos
   TREINOS: '/treinos/',
-  
+
   // Inscrições
   INSCRICOES: '/inscricoes/',
-  
+
   // Usuários
   USUARIOS: '/usuarios/',
-  
+
   // Métricas
   METRICS: '/metrics/',
 } as const;
