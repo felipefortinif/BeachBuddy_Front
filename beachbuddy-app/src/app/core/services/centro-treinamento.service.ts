@@ -9,7 +9,7 @@ import { Treino } from '../models/treino.model';
   providedIn: 'root'
 })
 export class CentroTreinamentoService {
-  private readonly API_URL = 'http://localhost:8000/api/centros-treinamento';
+  private readonly API_URL = 'https://tranquil-sierra-35516-2375ac2e97d5.herokuapp.com/api/centros-treinamento'; //http://localhost:8000/
 
   constructor(private http: HttpClient) {}
 

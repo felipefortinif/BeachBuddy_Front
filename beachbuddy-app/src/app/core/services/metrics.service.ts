@@ -13,7 +13,7 @@ export interface Metrics {
   providedIn: 'root'
 })
 export class MetricsService {
-  private readonly API_URL = 'http://localhost:8000/api/metrics';
+  private readonly API_URL = 'https://tranquil-sierra-35516-2375ac2e97d5.herokuapp.com/api/metrics'; //http://localhost:8000/
 
   constructor(private http: HttpClient) {}
 
