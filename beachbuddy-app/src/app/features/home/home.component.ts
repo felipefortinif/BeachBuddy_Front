@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     }
 
     // Buscar métricas apenas se não estiver logado
-    this.http.get<HomeMetrics>('http://localhost:8000/api/metrics/').subscribe({
+    this.http.get<HomeMetrics>('https://tranquil-sierra-35516-2375ac2e97d5.herokuapp.com/api/metrics/').subscribe({
       next: (data) => this.metrics.set(data),
       error: () => {} // Silently fail
     });
