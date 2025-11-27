@@ -6,12 +6,13 @@ import { TreinoService } from '../../../core/services/treino.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { CentroTreinamento } from '../../../core/models/centro-treinamento.model';
 import { Treino } from '../../../core/models/treino.model';
+import { CtMapComponent } from '../../../shared/components/ct-map/ct-map.component';
 import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-ct-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, CtMapComponent],
   templateUrl: './ct-list.component.html',
   styleUrl: './ct-list.component.css'
 })
@@ -26,6 +27,11 @@ export class CtListComponent implements OnInit {
   isProfessor = computed(() => this.authService.isProfessor());
   isGerente = computed(() => this.authService.isGerente());
   currentUserId = computed(() => this.authService.currentUser()?.id || 0);
+
+  // Computed signal para CTs com localização
+  ctsComLocalizacao = computed(() => {
+    return this.cts().filter(ct => ct.latitude && ct.longitude);
+  });
 
   getTreinosFuturos(ctId: number): number {
     return this.ctsComTreinos().get(ctId) || 0;

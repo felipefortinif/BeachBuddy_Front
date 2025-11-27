@@ -21,6 +21,18 @@
     }
   </header>
 
+  <!-- Mapa interativo dos CTs -->
+  @if (ctsComLocalizacao().length > 0) {
+  <div class="ct-map-section">
+    <h2>📍 Encontre um CT perto de você</h2>
+    <p class="map-subtitle">Clique nos marcadores para ver detalhes e navegar pelo mapa do Rio de Janeiro</p>
+    <app-ct-map 
+      [cts]="ctsComLocalizacao()" 
+      [height]="'450px'">
+    </app-ct-map>
+  </div>
+  }
+
   @if (cts()) {
   <div class="ct-grid" aria-live="polite">
     @for (ct of cts(); track ct.id) {

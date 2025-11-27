@@ -30,6 +30,28 @@
     line-height: 1.5;
 }
 
+/* Map section */
+.ct-map-section {
+    margin: 32px 0;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+    border-radius: var(--bb-radius);
+    border: 1px solid rgba(0, 188, 212, 0.1);
+}
+
+.ct-map-section h2 {
+    margin: 0 0 8px 0;
+    color: var(--bb-dark);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.map-subtitle {
+    margin: 0 0 20px 0;
+    color: var(--bb-muted);
+    font-size: 0.9rem;
+}
+
 .ct-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

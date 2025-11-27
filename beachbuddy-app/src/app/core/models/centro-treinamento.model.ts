@@ -13,6 +13,8 @@ export interface CentroTreinamento {
   professores_nomes?: string[];
   upcoming_treinos?: number;
   treinos_futuros?: number;
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface CentroTreinamentoForm {

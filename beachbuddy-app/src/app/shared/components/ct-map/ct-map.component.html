@@ -1,0 +1,8 @@
+<div class="map-container">
+  @if (loading()) {
+    <div class="map-loading">
+      <p>Carregando mapa...</p>
+    </div>
+  }
+  <div id="ct-map" [style.height]="height"></div>
+</div>
