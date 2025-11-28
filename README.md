@@ -1,6 +1,8 @@
+<div align="center">
 # 🏖️ BeachBuddy
 
 Plataforma de gestão e agendamento para Centros de Treinamento (CTs) de futevôlei e funcional na praia. O projeto visa conectar alunos a professores e gerentes de CTs, facilitando a inscrição em aulas e a gestão dos espaços.
+</div>
 
 ## 👥 Integrantes do Grupo
 
