@@ -46,15 +46,15 @@ export class MeusCtsComponent implements OnInit {
     return this.ctsComTreinos().get(ctId) || 0;
   }
 
-  
+
 
   ngOnInit(): void {
-    // Buscar todos os CTs (a API filtrará pelos CTs do gerente logado automaticamente)
-    this.ctService.list().subscribe({
+    // Buscar apenas os CTs do gerente logado
+    this.ctService.getMeusCts().subscribe({
       next: (cts: CentroTreinamento[]) => {
         console.log('CTs do gerente carregados:', cts);
         this.cts.set(cts);
-        
+
         // Buscar treinos futuros para cada CT
         if (cts.length > 0) {
           this.loadTreinosAtivos(cts);
@@ -66,9 +66,9 @@ export class MeusCtsComponent implements OnInit {
 
   private loadTreinosAtivos(cts: CentroTreinamento[]): void {
     const hoje = new Date().toISOString().split('T')[0]; // formato YYYY-MM-DD
-    
+
     // Criar array de observables para buscar treinos de cada CT
-    const treinoRequests = cts.map(ct => 
+    const treinoRequests = cts.map(ct =>
       this.treinoService.list({ ct: ct.id, data_min: hoje })
     );
 
@@ -76,12 +76,12 @@ export class MeusCtsComponent implements OnInit {
     forkJoin(treinoRequests).subscribe({
       next: (results: Treino[][]) => {
         const treinosMap = new Map<number, number>();
-        
+
         cts.forEach((ct, index) => {
           const treinosFuturos = results[index];
           treinosMap.set(ct.id, treinosFuturos.length);
         });
-        
+
         console.log('Treinos ativos por CT:', treinosMap);
         this.ctsComTreinos.set(treinosMap);
       },

@@ -9,9 +9,10 @@ import { Treino } from '../models/treino.model';
   providedIn: 'root'
 })
 export class CentroTreinamentoService {
-  private readonly API_URL = 'https://tranquil-sierra-35516-2375ac2e97d5.herokuapp.com/api/centros-treinamento'; //http://localhost:8000/
+  //private readonly API_URL = 'http://127.0.0.1:8000/api/centros-treinamento'; //'https://tranquil-sierra-35516-2375ac2e97d5.herokuapp.com/api/centros-treinamento'; //localhost:8000/
+  private readonly API_URL = 'https://tranquil-sierra-35516-2375ac2e97d5.herokuapp.com/api/centros-treinamento';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Listar todos os centros de treinamento (público)
@@ -22,6 +23,14 @@ export class CentroTreinamentoService {
       .pipe(
         map(response => response.results)
       );
+  }
+
+  /**
+   * Listar apenas os CTs do gerente autenticado
+   * GET /api/centros-treinamento/meus-cts/
+   */
+  getMeusCts(): Observable<CentroTreinamento[]> {
+    return this.http.get<CentroTreinamento[]>(`${this.API_URL}/meus_cts/`);
   }
 
   /**
